@@ -19,7 +19,7 @@ const Menu = ({ onSelectMode }) => {
                             onClick={() => handleModeSelect('english')}
                             style={{ background: 'var(--gradient-english)', color: 'white' }}
                         >
-                            English
+                            알파벳
                         </button>
                         <button
                             className="menu-button hangul"

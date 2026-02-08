@@ -84,8 +84,10 @@ const Game = ({ mode, onBack }) => {
 
             if (mode.mode === 'english') {
                 utterance.lang = 'en-US';
+                // Convert to lowercase for speech to avoid "Capital A" pronunciation issues
+                utterance.text = text.toLowerCase();
             } else if (mode.mode === 'number' && mode.subMode === 'english') {
-                utterance.lang = 'ko-KR';
+                utterance.lang = 'en-US'; // Use native English pronunciation for numbers
             } else {
                 utterance.lang = 'ko-KR';
             }
