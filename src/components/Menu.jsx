@@ -30,7 +30,16 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
 
     const renderMainMenu = () => (
         <>
-            <h1 style={{ marginBottom: '2rem' }}>Tap Lingo</h1>
+            <h1 style={{ marginBottom: '0.5rem' }}>Tap Lingo</h1>
+            <p style={{
+                fontSize: '1.1rem',
+                color: 'rgba(255, 255, 255, 0.9)',
+                marginBottom: '2.5rem',
+                fontWeight: '400',
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+            }}>
+                터치하며 배우는 영어·한글·숫자
+            </p>
             <div className="button-group">
                 <button
                     onClick={() => handleMainModeSelect('english')}
