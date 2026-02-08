@@ -1,16 +1,48 @@
-# React + Vite
+# Tap Lingo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun and interactive learning app for children to explore English alphabets and Korean characters (Hangul) through simple tap interactions.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [https://taplingo.github.io](https://taplingo.github.io)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **English Mode**: Learn A-Z alphabets with random character display
+- **한글 Mode**: Explore Korean consonants (자음), vowels (모음), and syllables (음절)
+- **Tap to Learn**: Simple tap/click interaction to show random characters
+- **Mobile Friendly**: Optimized for iOS Safari and touch devices
+- **Kid-Friendly UI**: Large, colorful characters with smooth animations
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js 18+
+- npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+### Build & Deploy
+
+```bash
+npm run deploy
+```
+
+## Tech Stack
+
+- React 19
+- Vite 7
+- GitHub Pages (gh-pages)
+
+## License
+
+MIT
