@@ -1,48 +1,72 @@
 # Tap Lingo
 
-A fun and interactive learning app for children to explore English alphabets and Korean characters (Hangul) through simple tap interactions.
+아이들을 위한 재미있고 상호작용적인 학습 앱입니다. 간단한 탭 인터랙션을 통해 영어 알파벳, 한글, 숫자를 배울 수 있습니다.
 
-🔗 **Live Demo:** [https://taplingo.github.io](https://taplingo.github.io)
+🔗 **라이브 데모:** [https://taplingo.github.io](https://taplingo.github.io)
 
-## Features
+## 주요 기능
 
-- **English Mode**: Learn A-Z alphabets with random character display
-- **한글 Mode**: Explore Korean consonants (자음), vowels (모음), and syllables (음절)
-- **Tap to Learn**: Simple tap/click interaction to show random characters
-- **Mobile Friendly**: Optimized for iOS Safari and touch devices
-- **Kid-Friendly UI**: Large, colorful characters with smooth animations
+### 📚 학습 모드
+- **영어 모드**: A-Z 대문자와 소문자를 함께 표시
+- **한글 모드**: 
+  - 자음 이름 (기역, 니은, 디귿...)
+  - 자음 소리 (그, 느, 드...)
+- **숫자 모드**:
+  - 한국어 고유어 (하나, 둘, 셋...)
+  - 한국어 한자어 (일, 이, 삼...)
+  - 영어 (one, two, three...)
 
-## Getting Started
+### ✨ 특징
+- **탭하여 학습**: 화면을 터치하면 랜덤 문자/숫자 표시
+- **중복 방지**: 같은 문자가 연속으로 나오지 않음
+- **TTS 음성**: 각 문자/숫자를 음성으로 읽어줌 (켜기/끄기 가능)
+- **모바일 최적화**: iOS Safari 및 터치 디바이스에 최적화
+- **아이 친화적 UI**: 큰 글자와 부드러운 애니메이션
 
-### Prerequisites
+## 시작하기
+
+### 필수 요구사항
 
 - Node.js 18+
 - npm
 
-### Installation
+### 설치
 
 ```bash
 npm install
 ```
 
-### Development
+### 개발 서버 실행
 
 ```bash
 npm run dev
 ```
 
-### Build & Deploy
+로컬에서 실행 후 `http://localhost:5173` 접속
+
+### 모바일에서 테스트
+
+같은 WiFi에 연결된 상태에서:
+
+```bash
+npm run dev -- --host
+```
+
+표시되는 Network 주소 (예: `http://192.168.x.x:5173`)로 모바일 기기에서 접속
+
+### 빌드 및 배포
 
 ```bash
 npm run deploy
 ```
 
-## Tech Stack
+## 기술 스택
 
 - React 19
 - Vite 7
+- Web Speech API (TTS)
 - GitHub Pages (gh-pages)
 
-## License
+## 라이선스
 
 MIT
