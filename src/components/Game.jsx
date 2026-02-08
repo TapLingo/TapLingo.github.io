@@ -4,6 +4,7 @@ import {
     HANGUL_CONSONANTS,
     HANGUL_CONSONANT_NAMES,
     HANGUL_CONSONANT_SOUNDS,
+    HANGUL_SYLLABLES,
     NUMBERS,
     NUMBERS_KOREAN_NATIVE,
     NUMBERS_KOREAN_SINO,
@@ -15,8 +16,15 @@ const Game = ({ mode, onBack }) => {
     const [soundChar, setSoundChar] = useState('');
     const [subChar, setSubChar] = useState('');
     const [animate, setAnimate] = useState(false);
-    const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(false);
+    const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(() => {
+        const saved = localStorage.getItem('autoPlay');
+        return saved === 'true'; // Default to false if not set
+    });
+
+    // Store previous random index to avoid duplicates
     const previousIndexRef = useRef(null);
+    // Store current sequential index
+    const sequentialIndexRef = useRef(-1);
 
     const getDataSet = () => {
         if (mode.mode === 'english') {
@@ -29,6 +37,9 @@ const Game = ({ mode, onBack }) => {
             }
             if (mode.subMode === 'sounds') {
                 return { display: HANGUL_CONSONANTS, sound: HANGUL_CONSONANT_SOUNDS };
+            }
+            if (mode.subMode === 'syllables') {
+                return { display: HANGUL_SYLLABLES, sound: HANGUL_SYLLABLES };
             }
         }
 
@@ -47,18 +58,24 @@ const Game = ({ mode, onBack }) => {
         return { display: [], sound: [] };
     };
 
-    const generateRandomChar = (autoPlay = false) => {
+    const generateNextChar = (autoPlay = false) => {
         const dataset = getDataSet();
-        let randomIndex;
+        let nextIndex;
 
-        do {
-            randomIndex = Math.floor(Math.random() * dataset.display.length);
-        } while (randomIndex === previousIndexRef.current && dataset.display.length > 1);
+        if (mode.order === 'sequential') {
+            // Sequential logic
+            nextIndex = (sequentialIndexRef.current + 1) % dataset.display.length;
+            sequentialIndexRef.current = nextIndex;
+        } else {
+            // Random logic with duplicate prevention
+            do {
+                nextIndex = Math.floor(Math.random() * dataset.display.length);
+            } while (nextIndex === previousIndexRef.current && dataset.display.length > 1);
+            previousIndexRef.current = nextIndex;
+        }
 
-        previousIndexRef.current = randomIndex;
-
-        const newDisplayChar = dataset.display[randomIndex];
-        const newSoundChar = dataset.sound[randomIndex];
+        const newDisplayChar = dataset.display[nextIndex];
+        const newSoundChar = dataset.sound[nextIndex];
 
         setDisplayChar(newDisplayChar);
         setSoundChar(newSoundChar);
@@ -98,7 +115,16 @@ const Game = ({ mode, onBack }) => {
     };
 
     useEffect(() => {
-        generateRandomChar(false);
+        // Reset sequential index on mount
+        sequentialIndexRef.current = -1;
+        generateNextChar(isAutoPlayEnabled); // Auto-play on init if enabled
+
+        return () => {
+            // Cancel speech when component unmounts or effect re-runs
+            // This prevents double playback in React Strict Mode
+            window.speechSynthesis.cancel();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mode]);
 
     const getBackgroundStyle = () => {
@@ -109,7 +135,13 @@ const Game = ({ mode, onBack }) => {
     };
 
     const handlePlaySound = (e) => {
-        e.stopPropagation();
+        if (e && e.stopPropagation) e.stopPropagation();
+
+        // Trigger animation
+        setAnimate(false); // Reset first to ensure re-trigger
+        setTimeout(() => setAnimate(true), 10);
+        setTimeout(() => setAnimate(false), 310);
+
         if (soundChar) {
             playSound(soundChar);
         }
@@ -117,13 +149,15 @@ const Game = ({ mode, onBack }) => {
 
     const toggleAutoPlay = (e) => {
         e.stopPropagation();
-        setIsAutoPlayEnabled(!isAutoPlayEnabled);
+        const newState = !isAutoPlayEnabled;
+        setIsAutoPlayEnabled(newState);
+        localStorage.setItem('autoPlay', newState);
     };
 
     return (
         <div
             className="game-container"
-            onClick={() => generateRandomChar(true)}
+            onClick={handlePlaySound} // Screen tap plays sound
             style={{
                 width: '100vw',
                 height: '100vh',
@@ -137,48 +171,82 @@ const Game = ({ mode, onBack }) => {
                 userSelect: 'none'
             }}
         >
-            <button
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onBack();
-                }}
-                style={{
-                    position: 'absolute',
-                    top: '20px',
-                    left: '20px',
-                    fontSize: '1rem',
-                    padding: '0.5rem 1rem',
-                    background: 'rgba(255,255,255,0.2)',
-                    color: 'white',
-                    backdropFilter: 'blur(5px)',
-                    border: '1px solid rgba(255,255,255,0.4)',
-                    zIndex: 10,
-                    borderRadius: '12px',
-                    cursor: 'pointer'
-                }}
-            >
-                ← 뒤로
-            </button>
+            {/* Header Controls */}
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                padding: '20px',
+                paddingTop: 'calc(env(safe-area-inset-top) + 20px)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                zIndex: 10,
+                pointerEvents: 'none' // Let clicks pass through to container
+            }}>
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onBack();
+                    }}
+                    style={{
+                        fontSize: '1rem',
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(255,255,255,0.2)',
+                        color: 'white',
+                        backdropFilter: 'blur(5px)',
+                        border: '1px solid rgba(255,255,255,0.4)',
+                        borderRadius: '12px',
+                        cursor: 'pointer',
+                        pointerEvents: 'auto', // Re-enable clicks
+                        flexShrink: 0,
+                        width: 'auto' // Override global button width
+                    }}
+                >
+                    ← 뒤로
+                </button>
 
-            <button
-                onClick={toggleAutoPlay}
-                style={{
-                    position: 'absolute',
-                    top: '20px',
-                    right: '20px',
-                    fontSize: '1rem',
-                    padding: '0.5rem 1rem',
-                    background: isAutoPlayEnabled ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)',
-                    color: 'white',
-                    backdropFilter: 'blur(5px)',
-                    border: '1px solid rgba(255,255,255,0.4)',
-                    zIndex: 10,
-                    borderRadius: '12px',
-                    cursor: 'pointer'
-                }}
-            >
-                {isAutoPlayEnabled ? '🔊 자동' : '🔇 수동'}
-            </button>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px' }}>
+                    <button
+                        onClick={toggleAutoPlay}
+                        style={{
+                            fontSize: '1rem',
+                            padding: '0.5rem 1rem',
+                            background: isAutoPlayEnabled ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)',
+                            color: 'white',
+                            backdropFilter: 'blur(5px)',
+                            border: '1px solid rgba(255,255,255,0.4)',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            pointerEvents: 'auto', // Re-enable clicks
+                            marginBottom: '5px',
+                            whiteSpace: 'nowrap',
+                            width: 'auto' // Override global button width
+                        }}
+                    >
+                        {isAutoPlayEnabled ? '🔊 자동' : '🔇 수동'}
+                    </button>
+
+                    {mode.order === 'sequential' && (
+                        <div
+                            style={{
+                                fontSize: '0.9rem',
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                background: 'transparent',
+                                padding: '4px 8px',
+                                pointerEvents: 'auto',
+                                whiteSpace: 'nowrap',
+                                marginTop: '5px',
+                                fontWeight: '500',
+                                textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+                            }}
+                        >
+                            🔢 순서대로
+                        </div>
+                    )}
+                </div>
+            </div>
 
             <div
                 className={`character-display ${animate ? 'pop' : ''}`}
@@ -209,7 +277,10 @@ const Game = ({ mode, onBack }) => {
             )}
 
             <button
-                onClick={handlePlaySound}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    generateNextChar(true); // Button generates next char
+                }}
                 style={{
                     position: 'absolute',
                     bottom: '40px',
@@ -225,10 +296,11 @@ const Game = ({ mode, onBack }) => {
                     zIndex: 10,
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                    width: 'auto' // Override global button width
                 }}
             >
-                ▶️
+                ➡️
             </button>
 
             <style>{`

@@ -12,11 +12,15 @@ export const HANGUL_CONSONANT_SOUNDS = [
   '그', '느', '드', '르', '므', '브', '스', '으', '즈', '츠', '크', '트', '프', '흐'
 ];
 
+export const HANGUL_SYLLABLES = [
+  '가', '나', '다', '라', '마', '바', '사', '아', '자', '차', '카', '타', '파', '하'
+];
+
 export const HANGUL_VOWELS = [
   'ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ'
 ];
 
-export const ALL_HANGUL = [...HANGUL_CONSONANTS, ...HANGUL_VOWELS];
+export const ALL_HANGUL = [...HANGUL_CONSONANTS, ...HANGUL_SYLLABLES];
 
 export const NUMBERS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
