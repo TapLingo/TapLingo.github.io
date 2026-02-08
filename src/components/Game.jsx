@@ -166,7 +166,7 @@ const Game = ({ mode, onBack }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 cursor: 'pointer',
-                background: getBackgroundStyle(),
+                background: 'transparent', // Use body background managed by App.jsx
                 position: 'relative',
                 userSelect: 'none'
             }}
@@ -178,7 +178,7 @@ const Game = ({ mode, onBack }) => {
                 left: 0,
                 width: '100%',
                 padding: '20px',
-                paddingTop: 'calc(env(safe-area-inset-top) + 20px)',
+                paddingTop: 'calc(max(env(safe-area-inset-top), 20px) + 10px)', // Reduced spacing
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
@@ -228,23 +228,7 @@ const Game = ({ mode, onBack }) => {
                         {isAutoPlayEnabled ? '🔊 자동' : '🔇 수동'}
                     </button>
 
-                    {mode.order === 'sequential' && (
-                        <div
-                            style={{
-                                fontSize: '0.9rem',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                background: 'transparent',
-                                padding: '4px 8px',
-                                pointerEvents: 'auto',
-                                whiteSpace: 'nowrap',
-                                marginTop: '5px',
-                                fontWeight: '500',
-                                textShadow: '0 1px 2px rgba(0,0,0,0.2)'
-                            }}
-                        >
-                            🔢 순서대로
-                        </div>
-                    )}
+
                 </div>
             </div>
 
@@ -286,21 +270,27 @@ const Game = ({ mode, onBack }) => {
                     bottom: '40px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    fontSize: '3rem',
-                    padding: '1rem 2rem',
-                    background: 'rgba(255,255,255,0.3)',
-                    color: 'white',
-                    backdropFilter: 'blur(10px)',
-                    border: '2px solid rgba(255,255,255,0.5)',
+                    width: 'auto',
+                    height: 'auto',
                     borderRadius: '50px',
-                    zIndex: 10,
+                    background: 'rgba(255, 255, 255, 0.25)',
+                    backdropFilter: 'blur(10px)',
+                    border: '2px solid rgba(255, 255, 255, 0.4)',
+                    boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
                     cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                    width: 'auto' // Override global button width
+                    transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                    zIndex: 10,
+                    padding: '1rem 2.5rem'
                 }}
             >
-                ➡️
+                <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>다음</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
             </button>
 
             <style>{`

@@ -34,36 +34,32 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   height: 100%;
   overscroll-behavior: none;
-  background-color: #e0c3fc;
+  /* Background managed by App.jsx */
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
+  padding: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100dvh;
-  background-color: #e0c3fc;
+  overscroll-behavior-y: none;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Background managed by App.jsx */
   overflow: hidden;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   position: relative;
-}
-
-/* Solid background that covers the entire viewport */
-body::before {
-  content: "";
-  position: fixed;
-  top: -100px;
-  left: -100px;
-  right: -100px;
-  bottom: -100px;
-  background-color: #e0c3fc;
-  z-index: -1;
 }
 
 #root {
