@@ -4,7 +4,7 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
 
     const handleMainModeSelect = (mode) => {
         if (mode === 'english') {
-            onNavigate('order', mode, null);
+            onNavigate('english', mode, null);
         } else if (mode === 'hangul') {
             onNavigate('hangul', mode, null);
         } else if (mode === 'number') {
@@ -14,6 +14,14 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
 
     const handleSubModeSelect = (subMode) => {
         onNavigate('order', selectedMode, subMode);
+    };
+
+    const handleDirectStart = (subMode) => {
+        onStartGame({
+            mode: selectedMode,
+            subMode: subMode,
+            order: 'random'
+        });
     };
 
     const handleOrderSelect = (order) => {
@@ -30,7 +38,7 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
 
     const renderMainMenu = () => (
         <>
-            <h1 style={{ marginBottom: '0.5rem' }}>Tap Lingo</h1>
+            <h1 style={{ marginBottom: '0.5rem' }}>어린이 공부방</h1>
             <p style={{
                 fontSize: '1.1rem',
                 color: 'rgba(255, 255, 255, 0.9)',
@@ -66,6 +74,78 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
         </>
     );
 
+    const renderEnglishMenu = () => (
+        <>
+            <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>영어 모드</h1>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: '400', opacity: 0.9 }}>어떻게 배울까요?</h2>
+            <div className="button-group">
+                <button
+                    onClick={() => handleSubModeSelect('alphabet')}
+                    style={{ background: 'var(--gradient-english)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>알파벳 이름</span>
+                    A, B, C
+                </button>
+                <button
+                    onClick={() => handleSubModeSelect('sounds')}
+                    style={{ background: 'var(--gradient-english)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>알파벳 소리</span>
+                    애, 브, 크
+                </button>
+                <button
+                    onClick={() => onNavigate('animals', 'english', null)}
+                    style={{ background: 'var(--gradient-english)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>동물 이름</span>
+                    🐳 🦁 🦋
+                </button>
+                <button
+                    className="back-button"
+                    onClick={goBack}
+                >
+                    ← 뒤로
+                </button>
+            </div>
+        </>
+    );
+
+    const renderAnimalsMenu = () => (
+        <>
+            <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>동물 이름</h1>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: '400', opacity: 0.9 }}>어떤 동물을 배울까요?</h2>
+            <div className="button-group">
+                <button
+                    onClick={() => handleDirectStart('animals-sea')}
+                    style={{ background: 'linear-gradient(135deg, #0077B6, #00B4D8)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>바다 동물</span>
+                    🐳 🐬 🦈
+                </button>
+                <button
+                    onClick={() => handleDirectStart('animals-land')}
+                    style={{ background: 'linear-gradient(135deg, #606C38, #DDA15E)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>육지 동물</span>
+                    🦁 🐘 🐯
+                </button>
+                <button
+                    onClick={() => handleDirectStart('animals-insects')}
+                    style={{ background: 'linear-gradient(135deg, #BC6C25, #FEFAE0)', color: '#333', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>곤충</span>
+                    🦋 🐝 🐞
+                </button>
+                <button
+                    className="back-button"
+                    onClick={goBack}
+                >
+                    ← 뒤로
+                </button>
+            </div>
+        </>
+    );
+
     const renderHangulMenu = () => (
         <>
             <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>한글 모드</h1>
@@ -91,6 +171,20 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
                 >
                     <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>글자로 배우기</span>
                     가, 나, 다
+                </button>
+                <button
+                    onClick={() => handleSubModeSelect('vowels')}
+                    style={{ background: 'var(--gradient-hangul)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>모음 배우기</span>
+                    ㅏ, ㅑ, ㅓ, ㅕ
+                </button>
+                <button
+                    onClick={() => handleSubModeSelect('double')}
+                    style={{ background: 'var(--gradient-hangul)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>된소리 배우기</span>
+                    ㄲ, ㄸ, ㅃ, ㅆ, ㅉ
                 </button>
                 <button
                     className="back-button"
@@ -127,6 +221,20 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
                 >
                     <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>영어 숫자</span>
                     One, Two, Three
+                </button>
+                <button
+                    onClick={() => handleSubModeSelect('place-values')}
+                    style={{ background: 'var(--gradient-number)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>자릿수</span>
+                    1, 10, 100, 1000...
+                </button>
+                <button
+                    onClick={() => handleDirectStart('random-10-100')}
+                    style={{ background: 'var(--gradient-number)', color: 'white', border: 'none' }}
+                >
+                    <span style={{ fontSize: '1.2rem', display: 'block', opacity: 0.9 }}>랜덤 숫자</span>
+                    10 ~ 100
                 </button>
                 <button
                     className="back-button"
@@ -194,6 +302,8 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
             padding: '20px'
         }}>
             {currentView === 'main' && renderMainMenu()}
+            {currentView === 'english' && renderEnglishMenu()}
+            {currentView === 'animals' && renderAnimalsMenu()}
             {currentView === 'hangul' && renderHangulMenu()}
             {currentView === 'number' && renderNumberMenu()}
             {currentView === 'order' && renderOrderMenu()}

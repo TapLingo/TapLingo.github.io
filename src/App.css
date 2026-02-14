@@ -52,3 +52,34 @@
   justify-content: center;
   align-items: center;
 }
+
+/* Animal Image Styles */
+.animal-image {
+  width: 85vw;
+  /* Mobile first: wider, clearer images */
+  max-width: 400px;
+  /* Limit max size on larger screens */
+  height: auto;
+  max-height: 55vh;
+  /* Prevent it from taking too much vertical space */
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+
+/* For smaller phones, ensure text is visible */
+@media (max-height: 700px) {
+  .animal-image {
+    max-height: 45vh;
+  }
+}
+
+/* For larger screens (tablets/desktops) */
+@media (min-width: 768px) {
+  .animal-image {
+    width: 60vw;
+    max-width: 450px;
+    max-height: 60vh;
+  }
+}

@@ -5,16 +5,30 @@ import {
     HANGUL_CONSONANT_NAMES,
     HANGUL_CONSONANT_SOUNDS,
     HANGUL_SYLLABLES,
+    HANGUL_VOWELS,
+    HANGUL_VOWEL_NAMES,
+    HANGUL_DOUBLE_CONSONANTS,
+    HANGUL_DOUBLE_CONSONANT_NAMES,
+    HANGUL_DOUBLE_CONSONANT_SOUNDS,
+    ENGLISH_PHONICS_IPA,
+    ENGLISH_PHONICS_SOUNDS,
     NUMBERS,
     NUMBERS_KOREAN_NATIVE,
     NUMBERS_KOREAN_SINO,
-    NUMBERS_ENGLISH
+    NUMBERS_ENGLISH,
+    PLACE_VALUES,
+    PLACE_VALUES_KOREAN,
+    PLACE_VALUES_ENGLISH,
+    SEA_ANIMALS,
+    LAND_ANIMALS,
+    INSECT_ANIMALS
 } from '../utils/characters';
 
 const Game = ({ mode, onBack }) => {
     const [displayChar, setDisplayChar] = useState('');
     const [soundChar, setSoundChar] = useState('');
     const [subChar, setSubChar] = useState('');
+    const [imageUrl, setImageUrl] = useState(null);
     const [animate, setAnimate] = useState(false);
     const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(() => {
         const saved = localStorage.getItem('autoPlay');
@@ -28,6 +42,18 @@ const Game = ({ mode, onBack }) => {
 
     const getDataSet = () => {
         if (mode.mode === 'english') {
+            if (mode.subMode === 'sounds') {
+                return { display: ENGLISH_ALPHABET, sound: ENGLISH_PHONICS_SOUNDS, sub: ENGLISH_PHONICS_IPA };
+            }
+            if (mode.subMode === 'animals-sea') {
+                return { animalData: SEA_ANIMALS };
+            }
+            if (mode.subMode === 'animals-land') {
+                return { animalData: LAND_ANIMALS };
+            }
+            if (mode.subMode === 'animals-insects') {
+                return { animalData: INSECT_ANIMALS };
+            }
             return { display: ENGLISH_ALPHABET, sound: ENGLISH_ALPHABET };
         }
 
@@ -41,6 +67,12 @@ const Game = ({ mode, onBack }) => {
             if (mode.subMode === 'syllables') {
                 return { display: HANGUL_SYLLABLES, sound: HANGUL_SYLLABLES };
             }
+            if (mode.subMode === 'vowels') {
+                return { display: HANGUL_VOWELS, sound: HANGUL_VOWEL_NAMES };
+            }
+            if (mode.subMode === 'double') {
+                return { display: HANGUL_DOUBLE_CONSONANTS, sound: HANGUL_DOUBLE_CONSONANT_SOUNDS };
+            }
         }
 
         if (mode.mode === 'number') {
@@ -53,6 +85,12 @@ const Game = ({ mode, onBack }) => {
             if (mode.subMode === 'english') {
                 return { display: NUMBERS, sound: NUMBERS_ENGLISH };
             }
+            if (mode.subMode === 'place-values') {
+                return { display: PLACE_VALUES, sound: PLACE_VALUES_KOREAN };
+            }
+            if (mode.subMode === 'random-10-100') {
+                return { dynamic: true };
+            }
         }
 
         return { display: [], sound: [] };
@@ -60,14 +98,62 @@ const Game = ({ mode, onBack }) => {
 
     const generateNextChar = (autoPlay = false) => {
         const dataset = getDataSet();
+
+        if (dataset.dynamic && mode.subMode === 'random-10-100') {
+            let num;
+            do {
+                num = Math.floor(Math.random() * 91) + 10;
+            } while (num === previousIndexRef.current);
+            previousIndexRef.current = num;
+
+            const numStr = String(num);
+            setDisplayChar(numStr);
+            setSoundChar(numStr);
+            setSubChar('');
+            setImageUrl(null);
+
+            setAnimate(true);
+            setTimeout(() => setAnimate(false), 300);
+
+            if (autoPlay && isAutoPlayEnabled) {
+                playSound(numStr);
+            }
+            return;
+        }
+
+        if (dataset.animalData) {
+            let nextIndex;
+            if (mode.order === 'sequential') {
+                nextIndex = (sequentialIndexRef.current + 1) % dataset.animalData.length;
+                sequentialIndexRef.current = nextIndex;
+            } else {
+                do {
+                    nextIndex = Math.floor(Math.random() * dataset.animalData.length);
+                } while (nextIndex === previousIndexRef.current && dataset.animalData.length > 1);
+                previousIndexRef.current = nextIndex;
+            }
+
+            const animal = dataset.animalData[nextIndex];
+            setDisplayChar('');
+            setImageUrl(animal.image);
+            setSoundChar(animal.name);
+            setSubChar(animal.name);
+
+            setAnimate(true);
+            setTimeout(() => setAnimate(false), 300);
+
+            if (autoPlay && isAutoPlayEnabled) {
+                playSound(animal.name);
+            }
+            return;
+        }
+
         let nextIndex;
 
         if (mode.order === 'sequential') {
-            // Sequential logic
             nextIndex = (sequentialIndexRef.current + 1) % dataset.display.length;
             sequentialIndexRef.current = nextIndex;
         } else {
-            // Random logic with duplicate prevention
             do {
                 nextIndex = Math.floor(Math.random() * dataset.display.length);
             } while (nextIndex === previousIndexRef.current && dataset.display.length > 1);
@@ -79,8 +165,11 @@ const Game = ({ mode, onBack }) => {
 
         setDisplayChar(newDisplayChar);
         setSoundChar(newSoundChar);
+        setImageUrl(null);
 
-        if (mode.mode === 'english') {
+        if (dataset.sub) {
+            setSubChar(dataset.sub[nextIndex]);
+        } else if (mode.mode === 'english') {
             setSubChar(newDisplayChar.toLowerCase());
         } else {
             setSubChar('');
@@ -101,10 +190,13 @@ const Game = ({ mode, onBack }) => {
 
             if (mode.mode === 'english') {
                 utterance.lang = 'en-US';
-                // Convert to lowercase for speech to avoid "Capital A" pronunciation issues
                 utterance.text = text.toLowerCase();
             } else if (mode.mode === 'number' && mode.subMode === 'english') {
-                utterance.lang = 'en-US'; // Use native English pronunciation for numbers
+                utterance.lang = 'en-US';
+            } else if (mode.mode === 'number' && mode.subMode === 'random-10-100') {
+                utterance.lang = 'en-US';
+            } else if (mode.mode === 'number' && mode.subMode === 'place-values') {
+                utterance.lang = 'ko-KR';
             } else {
                 utterance.lang = 'ko-KR';
             }
@@ -232,28 +324,37 @@ const Game = ({ mode, onBack }) => {
                 </div>
             </div>
 
-            <div
-                className={`character-display ${animate ? 'pop' : ''}`}
-                style={{
-                    fontSize: '15rem',
-                    fontWeight: 'bold',
-                    color: 'white',
-                    textShadow: '0 10px 20px rgba(0,0,0,0.2)',
-                    transition: 'transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    marginBottom: subChar ? '0' : '0'
-                }}
-            >
-                {displayChar}
-            </div>
+            {imageUrl ? (
+                <img
+                    src={imageUrl}
+                    alt={subChar}
+                    className={`animal-display ${animate ? 'pop' : ''} animal-image`}
+                />
+            ) : (
+                <div
+                    className={`character-display ${animate ? 'pop' : ''}`}
+                    style={{
+                        fontSize: displayChar.length > 3 ? '8rem' : '15rem',
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0 10px 20px rgba(0,0,0,0.2)',
+                        transition: 'transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                        marginBottom: subChar ? '0' : '0'
+                    }}
+                >
+                    {displayChar}
+                </div>
+            )}
 
             {subChar && (
                 <div
                     style={{
-                        fontSize: '6rem',
+                        fontSize: mode.subMode?.startsWith('animals-') ? '2.5rem' : (subChar.length > 3 ? '3rem' : '6rem'),
                         fontWeight: '500',
                         color: 'rgba(255,255,255,0.8)',
                         textShadow: '0 5px 10px rgba(0,0,0,0.1)',
-                        marginTop: '-2rem'
+                        marginTop: mode.subMode?.startsWith('animals-') ? '1.5rem' : '-2rem',
+                        textTransform: mode.subMode?.startsWith('animals-') ? 'capitalize' : 'none'
                     }}
                 >
                     {subChar}
