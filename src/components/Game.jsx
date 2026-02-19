@@ -38,8 +38,8 @@ const Game = ({ mode, onBack }) => {
 
     // Store previous random index to avoid duplicates
     const previousIndexRef = useRef(null);
-    // Store current sequential index
-    // Store current sequential index
+    const shuffledIndicesRef = useRef([]); // Shuffle bag
+    const recentNumbersRef = useRef([]); // History for random-10-100
     const sequentialIndexRef = useRef(-1);
     const currentAudioRef = useRef(null);
 
@@ -149,15 +149,45 @@ const Game = ({ mode, onBack }) => {
         return { display: [], sound: [] };
     };
 
+    const getNextRandomIndex = (length) => {
+        if (length <= 0) return 0;
+        if (length === 1) return 0;
+
+        if (shuffledIndicesRef.current.length === 0) {
+            const newIndices = Array.from({ length }, (_, i) => i);
+            // Fisher-Yates Shuffle
+            for (let i = newIndices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newIndices[i], newIndices[j]] = [newIndices[j], newIndices[i]];
+            }
+
+            // Avoid repeating the last item of the previous bag as the first item of the new bag
+            if (previousIndexRef.current !== null && newIndices[0] === previousIndexRef.current) {
+                const lastIdx = newIndices.length - 1;
+                [newIndices[0], newIndices[lastIdx]] = [newIndices[lastIdx], newIndices[0]];
+            }
+            shuffledIndicesRef.current = newIndices;
+        }
+
+        const nextIndex = shuffledIndicesRef.current.pop();
+        previousIndexRef.current = nextIndex;
+        return nextIndex;
+    };
+
     const generateNextChar = (autoPlay = false) => {
         const dataset = getDataSet();
 
         if (dataset.dynamic && mode.subMode === 'random-10-100') {
             let num;
+            let attempts = 0;
             do {
                 num = Math.floor(Math.random() * 91) + 10;
-            } while (num === previousIndexRef.current);
-            previousIndexRef.current = num;
+                attempts++;
+            } while (recentNumbersRef.current.includes(num) && attempts < 50);
+
+            // Keep history of last 15 numbers to avoid "soon" repetition
+            recentNumbersRef.current.push(num);
+            if (recentNumbersRef.current.length > 15) recentNumbersRef.current.shift();
 
             const numStr = String(num);
             setDisplayChar(numStr);
@@ -180,10 +210,7 @@ const Game = ({ mode, onBack }) => {
                 nextIndex = (sequentialIndexRef.current + 1) % dataset.animalData.length;
                 sequentialIndexRef.current = nextIndex;
             } else {
-                do {
-                    nextIndex = Math.floor(Math.random() * dataset.animalData.length);
-                } while (nextIndex === previousIndexRef.current && dataset.animalData.length > 1);
-                previousIndexRef.current = nextIndex;
+                nextIndex = getNextRandomIndex(dataset.animalData.length);
             }
 
             const animal = dataset.animalData[nextIndex];
@@ -208,10 +235,7 @@ const Game = ({ mode, onBack }) => {
                 nextIndex = (sequentialIndexRef.current + 1) % dataset.zootopiaData.length;
                 sequentialIndexRef.current = nextIndex;
             } else {
-                do {
-                    nextIndex = Math.floor(Math.random() * dataset.zootopiaData.length);
-                } while (nextIndex === previousIndexRef.current && dataset.zootopiaData.length > 1);
-                previousIndexRef.current = nextIndex;
+                nextIndex = getNextRandomIndex(dataset.zootopiaData.length);
             }
 
             const animal = dataset.zootopiaData[nextIndex];
@@ -237,10 +261,7 @@ const Game = ({ mode, onBack }) => {
             nextIndex = (sequentialIndexRef.current + 1) % dataset.display.length;
             sequentialIndexRef.current = nextIndex;
         } else {
-            do {
-                nextIndex = Math.floor(Math.random() * dataset.display.length);
-            } while (nextIndex === previousIndexRef.current && dataset.display.length > 1);
-            previousIndexRef.current = nextIndex;
+            nextIndex = getNextRandomIndex(dataset.display.length);
         }
 
         const newDisplayChar = dataset.display[nextIndex];
@@ -287,6 +308,8 @@ const Game = ({ mode, onBack }) => {
     useEffect(() => {
         // Reset sequential index on mount
         sequentialIndexRef.current = -1;
+        shuffledIndicesRef.current = []; // Reset shuffle bag
+        recentNumbersRef.current = [];   // Reset number history
         generateNextChar(isAutoPlayEnabled); // Auto-play on init if enabled
 
         return () => {
