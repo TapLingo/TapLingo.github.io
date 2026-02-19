@@ -426,7 +426,7 @@ const Game = ({ mode, onBack }) => {
                     <img
                         src={imageUrl}
                         alt={subChar}
-                        className={`animal-display ${animate ? 'pop' : ''}`}
+                        className="animal-display"
                         style={{
                             position: 'absolute',
                             top: 0,
@@ -479,7 +479,7 @@ const Game = ({ mode, onBack }) => {
                     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
                 }}>
                     {subChar && (
-                        <div style={{
+                        <div className={animate ? 'pop' : ''} style={{
                             fontSize: '2.5rem',
                             fontWeight: '800',
                             color: 'white',
