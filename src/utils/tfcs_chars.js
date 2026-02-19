@@ -1,0 +1,11 @@
+export const TFCS_IPA = [
+  '/b/', '/d/', '/dʒ/', '/ʒ/', '/f/', '/g/', '/h/', '/k/', '/l/', '/m/', '/n/', '/ŋ/', '/p/', '/r/', '/s/', '/ʃ/', '/t/', '/t∫/', '/θ/', '/ð/', '/v/', '/w/', '/y/', '/z/', '/i/', '/ɪ/', '/e/', '/ɛ/', '/æ/', '/ʌ/', '/u/', '/ʊ/', '/o/', '/ɑ/', '/ɑɪ/', '/ɑʊ/', '/ɔɪ/', '/kw/', '/st/', '/sk/', '/ks/', '/sp/', '/sl/'
+];
+
+export const TFCS_SOUNDS = [
+  'b', 'd', 'jh', 'zh', 'f', 'g', 'hh', 'k', 'l', 'm', 'n', 'ng', 'p', 'r', 's', 'sh', 't', 't_', 'th', 'dh', 'v', 'w', 'y', 'z', 'iy', 'ih', 'ey', 'eh', 'ae', 'uh', 'uw', 'uh_short', 'ow', 'aa', 'ay', 'aw', 'oy', 'kw', 'st', 'sk', 'ks', 'sp', 'sl'
+];
+
+export const TFCS_ALPHABETS = [
+  'B', 'D', 'J', 'ZH', 'F', 'G', 'H', 'K', 'L', 'M', 'N', 'NG', 'P', 'R', 'S', 'SH', 'T', 'T∫', 'TH', 'TH', 'V', 'W', 'Y', 'Z', 'EE', 'I', 'AY', 'E', 'A', 'U', 'OO', 'OO', 'O', 'A', 'AI', 'OW', 'OY', 'Q', 'ST', 'SK', 'X', 'SP', 'SL'
+];

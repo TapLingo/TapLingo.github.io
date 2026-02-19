@@ -53,6 +53,9 @@ function App() {
     } else if (mode === 'number') {
       bg = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
       themeColor = '#667eea';
+    } else if (mode === 'animals') {
+      bg = 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';
+      themeColor = '#43e97b';
     }
 
     return { bg, themeColor };

@@ -1,17 +1,5 @@
 export const ENGLISH_ALPHABET = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
-export const ENGLISH_PHONICS_IPA = [
-  '/æ/', '/b/', '/k/', '/d/', '/ɛ/', '/f/', '/g/', '/h/', '/ɪ/', '/dʒ/',
-  '/k/', '/l/', '/m/', '/n/', '/ɑ/', '/p/', '/kw/', '/r/', '/s/', '/t/',
-  '/ʌ/', '/v/', '/w/', '/ks/', '/j/', '/z/'
-];
-
-export const ENGLISH_PHONICS_SOUNDS = [
-  'ae', 'buh', 'kuh', 'duh', 'eh', 'fuh', 'guh', 'huh', 'ih', 'juh',
-  'kuh', 'luh', 'muh', 'nuh', 'ah', 'puh', 'kwuh', 'ruh', 'suh', 'tuh',
-  'uh', 'vuh', 'wuh', 'ks', 'yuh', 'zuh'
-];
-
 export const HANGUL_CONSONANTS = [
   'ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
 ];
@@ -135,4 +123,46 @@ export const INSECT_ANIMALS = [
   { name: 'snail', image: '/animals/insects/snail.png' },
   { name: 'mosquito', image: '/animals/insects/mosquito.png' },
   { name: 'stag beetle', image: '/animals/insects/stag_beetle.png' }
+];
+
+export const ZOOTOPIA_ANIMALS = [
+  { english: 'Rabbit', korean: '토끼', character: 'Judy Hopps', image: '/animals/zootopia/judy_hopps.png' },
+  { english: 'Red Fox', korean: '여우', character: 'Nick Wilde', image: '/animals/zootopia/nick_wilde.png' },
+  { english: 'Cape Buffalo', korean: '물소', character: 'Chief Bogo', image: '/animals/zootopia/chief_bogo.png' },
+  { english: 'Cheetah', korean: '치타', character: 'Benjamin Clawhauser', image: '/animals/zootopia/benjamin_clawhauser.png' },
+  { english: 'Lion', korean: '사자', character: 'Mayor Lionheart', image: '/animals/zootopia/mayor_lionheart.png' },
+  { english: 'Sheep', korean: '양', character: 'Dawn Bellwether', image: '/animals/zootopia/dawn_bellwether.png' },
+  { english: 'Sloth', korean: '나무늘보', character: 'Flash', image: '/animals/zootopia/flash.png' },
+  { english: 'Elephant', korean: '코끼리', character: 'Francine Pennington', image: '/animals/zootopia/francine_pennington.png' },
+  { english: 'Tiger', korean: '호랑이', character: 'Officer Tiger', image: '/animals/zootopia/officer_tiger.png' },
+  { english: 'Gazelle', korean: '가젤', character: 'Gazelle', image: '/animals/zootopia/gazelle.png' },
+  { english: 'Otter', korean: '수달', character: 'Mrs. Otterton', image: '/animals/zootopia/otterton.png' },
+  { english: 'Weasel', korean: '족제비', character: 'Duke Weaselton', image: '/animals/zootopia/duke_weaselton.png' },
+  { english: 'Arctic Shrew', korean: '북극뒤쥐', character: 'Mr. Big', image: '/animals/zootopia/mr_big.png' },
+  { english: 'Fennec Fox', korean: '사막여우', character: 'Finnick', image: '/animals/zootopia/finnick.png' },
+  { english: 'Yak', korean: '야크', character: 'Yax', image: '/animals/zootopia/yax.png' },
+  { english: 'Wolf', korean: '늑대', character: 'Gary', image: '/animals/zootopia/gary.png' },
+  { english: 'Black Jaguar', korean: '흑재규어', character: 'Manchas', image: '/animals/zootopia/manchas.png' },
+  { english: 'Polar Bear', korean: '북극곰', character: 'Koslov', image: '/animals/zootopia/koslov.png' },
+  { english: 'Honey Badger', korean: '벌꿀오소리', character: 'Dr. Madge', image: '/animals/zootopia/dr_madge.png' },
+  { english: 'Rhinoceros', korean: '코뿔소', character: 'Officer McHorn', image: '/animals/zootopia/officer_mchorn.png' },
+  { english: 'Moose', korean: '무스', character: 'Peter Moosebridge', image: '/animals/zootopia/peter_moosebridge.png' },
+  { english: 'Pig', korean: '돼지', character: 'Frantic Pig', image: '/animals/zootopia/frantic_pig.png' },
+  { english: 'Beaver', korean: '비버', character: 'Construction Beaver', image: '/animals/zootopia/construction_beaver.png' },
+  { english: 'Mouse', korean: '쥐', character: 'Construction Mouse', image: '/animals/zootopia/construction_mouse.png' },
+  { english: 'Snow Leopard', korean: '눈표범', character: 'Fabienne Growley', image: '/animals/zootopia/fabienne_growley.png' },
+  { english: 'Ram', korean: '숫양', character: 'Doug', image: '/animals/zootopia/ram_doug.png' },
+  { english: 'Kudu', korean: '쿠두', character: 'Bucky Oryx-Antlerson', image: '/animals/zootopia/bucky_oryx_antlerson.png' },
+  { english: 'Oryx', korean: '오릭스', character: 'Pronk Oryx-Antlerson', image: '/animals/zootopia/pronk_oryx_antlerson.png' },
+  { english: 'Sloth', korean: '나무늘보', character: 'Priscilla', image: '/animals/zootopia/priscilla.png' },
+  { english: 'Elephant', korean: '코끼리', character: 'Jerry Jumbeaux Jr.', image: '/animals/zootopia/jerry_jumbeaux_jr.png' },
+  { english: 'Elephant', korean: '코끼리', character: 'Nangi', image: '/animals/zootopia/nangi.png' },
+  { english: 'Polar Bear', korean: '북극곰', character: 'Raymond', image: '/animals/zootopia/raymond.png' },
+  { english: 'Polar Bear', korean: '북극곰', character: 'Kevin', image: '/animals/zootopia/kevin.png' },
+  { english: 'Arctic Shrew', korean: '북극뒤쥐', character: 'Fru Fru', image: '/animals/zootopia/fru_fru.png' },
+  { english: 'Wolf', korean: '늑대', character: 'Larry', image: '/animals/zootopia/larry.png' },
+  { english: 'Hedgehog', korean: '고슴도치', character: 'Mrs. Hedgehog', image: '/animals/zootopia/hedgehog.png' },
+  { english: 'Armadillo', korean: '아르마딜로', character: 'Dharma', image: '/animals/zootopia/dharma.png' },
+  { english: 'Giraffe', korean: '기린', character: 'Tall Citizen', image: '/animals/zootopia/tall_citizen.png' },
+  { english: 'Hamster', korean: '햄스터', character: 'Business Hamster', image: '/animals/zootopia/business_hamster.png' }
 ];

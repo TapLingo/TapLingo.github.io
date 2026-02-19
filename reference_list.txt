@@ -1,0 +1,152 @@
+=========================================
+1. 주토피아 동물 리스트 (동물 : 캐릭터)
+=========================================
+Rabbit : Judy Hopps
+Red Fox : Nick Wilde
+Cape Buffalo : Chief Bogo
+Cheetah : Benjamin Clawhauser
+Lion : Mayor Lionheart
+Sheep : Dawn Bellwether
+Sloth : Flash
+Elephant : Francine Pennington
+Tiger : Officer Tiger
+Gazelle : Gazelle
+Otter : Mrs. Otterton
+Weasel : Duke Weaselton
+Arctic Shrew : Mr. Big
+Fennec Fox : Finnick
+Yak : Yax
+Wolf : Gary
+Black Jaguar : Manchas
+Polar Bear : Koslov
+Honey Badger : Dr. Madge
+Rhinoceros : Officer McHorn
+Moose : Peter Moosebridge
+Pig : Frantic Pig
+Beaver : Construction Beaver
+Mouse : Construction Mouse
+Snow Leopard : Fabienne Growley
+Ram : Doug
+Kudu : Bucky Oryx-Antlerson
+Oryx : Pronk Oryx-Antlerson
+Sloth : Priscilla
+Elephant : Jerry Jumbeaux Jr.
+Elephant : Nangi
+Polar Bear : Raymond
+Polar Bear : Kevin
+Arctic Shrew : Fru Fru
+Wolf : Larry
+Hedgehog : Mrs. Hedgehog
+Armadillo : Dharma
+Giraffe : Tall Citizen
+Hamster : Business Hamster
+
+=========================================
+2. 기존 동물 이름 (바다/육지/곤충)
+=========================================
+whale
+dolphin
+shark
+octopus
+seahorse
+jellyfish
+crab
+clownfish
+penguin
+starfish
+seal
+walrus
+stingray
+lobster
+shrimp
+sea otter
+squid
+pufferfish
+turtle
+dog
+cat
+lion
+elephant
+bear
+rabbit
+horse
+tiger
+giraffe
+fox
+deer
+wolf
+monkey
+panda
+koala
+hippo
+zebra
+cow
+gorilla
+butterfly
+bee
+ladybug
+ant
+dragonfly
+grasshopper
+beetle
+caterpillar
+firefly
+cricket
+mantis
+cicada
+moth
+spider
+centipede
+wasp
+scorpion
+snail
+mosquito
+stag beetle
+
+=========================================
+3. 한글 발음 (자음)
+=========================================
+그
+느
+드
+르
+므
+브
+스
+으
+즈
+츠
+크
+트
+프
+흐
+
+=========================================
+4. 알파벳 발음 (파닉스)
+=========================================
+ae
+buh
+kuh
+duh
+eh
+fuh
+guh
+huh
+ih
+juh
+kuh
+luh
+muh
+nuh
+ah
+puh
+kwuh
+ruh
+suh
+tuh
+uh
+vuh
+wuh
+ks
+yuh
+zuh
