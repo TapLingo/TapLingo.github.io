@@ -21,8 +21,8 @@ import {
     LAND_ANIMALS,
     INSECT_ANIMALS,
     ZOOTOPIA_ANIMALS
-} from '../utils/characters';
-import { TFCS_IPA, TFCS_SOUNDS, TFCS_ALPHABETS } from '../utils/tfcs_chars';
+} from '../utils/characters.json';
+import { TFCS_IPA, TFCS_SOUNDS, TFCS_ALPHABETS } from '../utils/tfcs_chars.json';
 
 const Game = ({ mode, onBack }) => {
     const [displayChar, setDisplayChar] = useState('');

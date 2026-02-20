@@ -1,9 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import * as chars from './src/utils/characters.js';
 import * as tts from 'google-tts-api';
 import axios from 'axios';
+
+const chars = JSON.parse(fs.readFileSync(new URL('./src/utils/characters.json', import.meta.url), 'utf-8'));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
