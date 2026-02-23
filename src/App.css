@@ -44,13 +44,20 @@
   color: #888;
 }
 
-/* Custom App Styles */
 .app {
   width: 100vw;
-  height: 100vh;
+  min-height: 100dvh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.content-wrapper {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 40px 0;
+  width: 100%;
 }
 
 /* Animal Image Styles */

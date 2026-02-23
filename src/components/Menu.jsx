@@ -49,42 +49,106 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
             }}>
             </p>
-            <div className="button-group">
-                <button
-                    onClick={() => handleMainModeSelect('english')}
-                    style={{ background: 'var(--gradient-english)', color: 'white', border: 'none' }}
-                >
-                    <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem' }}>ABC</span>
-                    알파벳
-                </button>
-                <button
-                    onClick={() => handleMainModeSelect('hangul')}
-                    style={{ background: 'var(--gradient-hangul)', color: 'white', border: 'none' }}
-                >
-                    <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem' }}>가나다</span>
-                    한글
-                </button>
-                <button
-                    onClick={() => handleMainModeSelect('number')}
-                    style={{ background: 'var(--gradient-number)', color: 'white', border: 'none' }}
-                >
-                    <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem' }}>123</span>
-                    숫자
-                </button>
-                <button
-                    onClick={() => handleMainModeSelect('animals')}
-                    style={{ background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', color: 'white', border: 'none' }}
-                >
-                    <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem' }}>🐾 동물이름</span>
-                    영어로 말하기
-                </button>
-                <button
-                    onClick={() => onStartGame({ mode: 'animals', subMode: 'zootopia', order: 'random' })}
-                    style={{ background: 'linear-gradient(135deg, #FF6B6B, #FFE66D)', color: 'white', border: 'none' }}
-                >
-                    <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem' }}>🦊 주토피아</span>
-                    영어로 말하기
-                </button>
+            <div style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '2rem', padding: '0 20px', paddingBottom: '3rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                    <h2 style={{ fontSize: '1.2rem', textAlign: 'left', margin: 0, paddingLeft: '0.5rem', color: 'rgba(255,255,255,0.9)', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>✏️ 기초 학습</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <button
+                            onClick={() => handleMainModeSelect('english')}
+                            style={{ background: 'var(--gradient-english)', color: 'white', border: 'none', aspectRatio: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '24px' }}
+                        >
+                            <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800' }}>ABC</span>
+                            알파벳
+                        </button>
+                        <button
+                            onClick={() => handleMainModeSelect('hangul')}
+                            style={{ background: 'var(--gradient-hangul)', color: 'white', border: 'none', aspectRatio: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '24px' }}
+                        >
+                            <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800' }}>가나다</span>
+                            한글
+                        </button>
+                        <button
+                            onClick={() => handleMainModeSelect('number')}
+                            style={{ gridColumn: '1 / -1', background: 'var(--gradient-number)', color: 'white', border: 'none', padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '24px' }}
+                        >
+                            <div style={{ textAlign: 'left' }}>
+                                <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800' }}>123</span>
+                                숫자
+                            </div>
+                            <div style={{ fontSize: '3rem', opacity: 0.8 }}>🔢</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                    <h2 style={{ fontSize: '1.2rem', textAlign: 'left', margin: 0, paddingLeft: '0.5rem', color: 'rgba(255,255,255,0.9)', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>🐾 동물 친구들</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <button
+                            onClick={() => handleMainModeSelect('animals')}
+                            style={{
+                                gridColumn: '1 / -1',
+                                backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 100%), url("/assets/animals-poster.jpg")',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center 40%',
+                                color: 'white',
+                                border: 'none',
+                                padding: '1.5rem 2rem',
+                                minHeight: '130px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'flex-start',
+                                borderRadius: '24px',
+                                boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+                            }}
+                        >
+                            <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>동물</span>
+                            <span style={{ fontSize: '1.1rem', textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>이름 말하기</span>
+                        </button>
+                        <button
+                            onClick={() => onStartGame({ mode: 'animals', subMode: 'zootopia', order: 'random' })}
+                            style={{
+                                backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%), url("/assets/zootopia-poster.jpg")',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center 20%',
+                                color: 'white',
+                                border: 'none',
+                                aspectRatio: '1',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-end',
+                                alignItems: 'flex-start',
+                                padding: '1.2rem',
+                                borderRadius: '24px',
+                                boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+                            }}
+                        >
+                            <span style={{ fontSize: '1.4rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5)' }}>주토피아</span>
+                            <span style={{ fontSize: '0.9rem', textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>영어로 말하기</span>
+                        </button>
+                        <button
+                            onClick={() => onStartGame({ mode: 'animals', subMode: 'zootopia2', order: 'random' })}
+                            style={{
+                                backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%), url("/assets/zootopia2-poster.jpg")',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center 20%',
+                                color: 'white',
+                                border: 'none',
+                                aspectRatio: '1',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-end',
+                                alignItems: 'flex-start',
+                                padding: '1.2rem',
+                                borderRadius: '24px',
+                                boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+                            }}
+                        >
+                            <span style={{ fontSize: '1.4rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5)' }}>주토피아 2</span>
+                            <span style={{ fontSize: '0.9rem', textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>영어로 말하기</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </>
     );

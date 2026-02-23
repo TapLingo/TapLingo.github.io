@@ -20,7 +20,8 @@ import {
     SEA_ANIMALS,
     LAND_ANIMALS,
     INSECT_ANIMALS,
-    ZOOTOPIA_ANIMALS
+    ZOOTOPIA_ANIMALS,
+    ZOOTOPIA2_ANIMALS
 } from '../utils/characters.json';
 import { TFCS_IPA, TFCS_SOUNDS, TFCS_ALPHABETS } from '../utils/tfcs_chars.json';
 
@@ -29,6 +30,8 @@ const Game = ({ mode, onBack }) => {
     const [soundChar, setSoundChar] = useState('');
     const [subChar, setSubChar] = useState('');
     const [characterName, setCharacterName] = useState('');
+    const [characterDesc, setCharacterDesc] = useState('');
+    const [showInfo, setShowInfo] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [animate, setAnimate] = useState(false);
     const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(() => {
@@ -52,8 +55,8 @@ const Game = ({ mode, onBack }) => {
     };
 
     const getAudioPath = (text, categoryOverride = null) => {
-        if (categoryOverride === 'zootopia_char') {
-            return `/audio/animals/zootopia_char/${safeName(text)}.mp3`;
+        if (categoryOverride === 'zootopia_char' || categoryOverride === 'zootopia2_char') {
+            return `/audio/animals/${categoryOverride}/${safeName(text)}.mp3`;
         }
 
         if (mode.mode === 'english') {
@@ -81,6 +84,7 @@ const Game = ({ mode, onBack }) => {
 
         if (mode.mode === 'animals') {
             if (mode.subMode === 'zootopia') return `/audio/animals/zootopia_en/${safeName(text)}.mp3`;
+            if (mode.subMode === 'zootopia2') return `/audio/animals/zootopia2_en/${safeName(text)}.mp3`;
             return `/audio/animals/basic/${safeName(text)}.mp3`;
         }
 
@@ -107,6 +111,9 @@ const Game = ({ mode, onBack }) => {
             }
             if (mode.subMode === 'zootopia') {
                 return { zootopiaData: ZOOTOPIA_ANIMALS, lang: 'en' };
+            }
+            if (mode.subMode === 'zootopia2') {
+                return { zootopiaData: ZOOTOPIA2_ANIMALS, lang: 'en' };
             }
         }
 
@@ -194,6 +201,8 @@ const Game = ({ mode, onBack }) => {
             setSoundChar(numStr);
             setSubChar('');
             setImageUrl(null);
+            setCharacterDesc('');
+            setShowInfo(false);
 
             setAnimate(true);
             setTimeout(() => setAnimate(false), 300);
@@ -219,6 +228,8 @@ const Game = ({ mode, onBack }) => {
             setSoundChar(animal.name);
             setSubChar(animal.name);
             setCharacterName('');
+            setCharacterDesc('');
+            setShowInfo(false);
 
             setAnimate(true);
             setTimeout(() => setAnimate(false), 300);
@@ -244,7 +255,9 @@ const Game = ({ mode, onBack }) => {
             setImageUrl(animal.image);
             setSoundChar(animalName);
             setSubChar(animalName);
-            setCharacterName(animal.character);
+            setCharacterName(dataset.lang === 'en' ? (animal.character_en || animal.character) : animal.character);
+            setCharacterDesc(animal.desc || '');
+            setShowInfo(false);
 
             setAnimate(true);
             setTimeout(() => setAnimate(false), 300);
@@ -279,6 +292,8 @@ const Game = ({ mode, onBack }) => {
             setSubChar('');
         }
         setCharacterName('');
+        setCharacterDesc('');
+        setShowInfo(false);
 
         setAnimate(true);
         setTimeout(() => setAnimate(false), 300);
@@ -474,7 +489,7 @@ const Game = ({ mode, onBack }) => {
                         textShadow: '0 10px 20px rgba(0,0,0,0.2)',
                         transition: 'transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
                         marginBottom: subChar ? '0' : '0',
-                        textTransform: (mode.subMode?.startsWith('animals-') || (mode.subMode === 'zootopia')) ? 'capitalize' : 'none'
+                        textTransform: (mode.subMode?.startsWith('animals-') || mode.subMode?.startsWith('zootopia')) ? 'capitalize' : 'none'
                     }}
                 >
                     {displayChar}
@@ -515,33 +530,85 @@ const Game = ({ mode, onBack }) => {
                         </div>
                     )}
                     {characterName && (
-                        <div
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                const target = e.currentTarget;
-                                target.style.transform = 'scale(1.1)';
-                                target.style.backgroundColor = 'rgba(255,255,255,0.3)';
-                                setTimeout(() => {
-                                    target.style.transform = 'scale(1)';
-                                    target.style.backgroundColor = 'rgba(255,255,255,0.15)';
-                                }, 200);
-                                playSound(characterName, 'zootopia_char');
-                            }}
-                            style={{
-                                fontSize: '1.4rem',
-                                color: 'rgba(255,255,255,0.9)',
-                                background: 'rgba(255,255,255,0.15)',
-                                padding: '8px 20px',
-                                borderRadius: '50px',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s',
-                                fontWeight: '600',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
-                            }}
-                        >
-                            <span style={{ fontSize: '1rem' }}>🗣️</span> {characterName}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    const target = e.currentTarget;
+                                    target.style.transform = 'scale(1.1)';
+                                    target.style.backgroundColor = 'rgba(255,255,255,0.3)';
+                                    setTimeout(() => {
+                                        target.style.transform = 'scale(1)';
+                                        target.style.backgroundColor = 'rgba(255,255,255,0.15)';
+                                    }, 200);
+                                    playSound(characterName, `${mode.subMode}_char`);
+                                }}
+                                style={{
+                                    fontSize: '1.4rem',
+                                    color: 'rgba(255,255,255,0.9)',
+                                    background: 'rgba(255,255,255,0.15)',
+                                    padding: '8px 20px',
+                                    borderRadius: '50px',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s',
+                                    fontWeight: '600',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px'
+                                }}
+                            >
+                                <span style={{ fontSize: '1rem' }}>🗣️</span> {characterName}
+                            </div>
+                            {characterDesc && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowInfo(!showInfo);
+                                    }}
+                                    style={{
+                                        width: '24px',
+                                        height: '24px',
+                                        borderRadius: '50%',
+                                        background: showInfo ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.25)',
+                                        color: showInfo ? '#333' : 'rgba(255,255,255,0.9)',
+                                        border: '1px solid rgba(255,255,255,0.1)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        fontSize: '0.9rem',
+                                        fontWeight: 'bold',
+                                        fontFamily: 'serif',
+                                        fontStyle: 'italic',
+                                        boxShadow: showInfo ? '0 2px 5px rgba(255,255,255,0.3)' : 'none',
+                                        transition: 'all 0.2s',
+                                        flexShrink: 0,
+                                        padding: 0,
+                                        margin: 0
+                                    }}
+                                    title="인물 설명 보기"
+                                >
+                                    i
+                                </button>
+                            )}
+                        </div>
+                    )}
+                    {showInfo && characterDesc && (
+                        <div style={{
+                            marginTop: '5px',
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontSize: '1rem',
+                            lineHeight: '1.4',
+                            textAlign: 'center',
+                            background: 'rgba(0, 0, 0, 0.3)',
+                            padding: '12px 16px',
+                            borderRadius: '16px',
+                            width: '100%',
+                            whiteSpace: 'pre-line',
+                            wordBreak: 'keep-all',
+                            animation: 'popAnimation 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                        }}>
+                            {characterDesc}
                         </div>
                     )}
                 </div>
@@ -573,7 +640,7 @@ const Game = ({ mode, onBack }) => {
                                     target.style.transform = 'scale(1)';
                                     target.style.color = 'rgba(255,255,255,0.6)';
                                 }, 200);
-                                playSound(characterName, 'zootopia_char');
+                                playSound(characterName, `${mode.subMode}_char`);
                             }}
                             style={{
                                 fontSize: '1.2rem',

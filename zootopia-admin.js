@@ -18,6 +18,7 @@ app.use('/public', express.static(PUBLIC_DIR));
 
 const CATEGORY_MAP = {
     'zootopia': { arrayName: 'ZOOTOPIA_ANIMALS', folder: 'zootopia' },
+    'zootopia2': { arrayName: 'ZOOTOPIA2_ANIMALS', folder: 'zootopia2' },
     'sea': { arrayName: 'SEA_ANIMALS', folder: 'sea' },
     'land': { arrayName: 'LAND_ANIMALS', folder: 'land' },
     'insects': { arrayName: 'INSECT_ANIMALS', folder: 'insects' }
@@ -133,8 +134,8 @@ app.post('/api/animals/:category', upload.single('imageFile'), (req, res) => {
         newImageUrl = `/animals/${CATEGORY_MAP[category].folder}/${req.file.filename}`;
     }
 
-    if (category === 'zootopia') {
-        const { originalEnglish, originalCharacter, english, korean, character } = req.body;
+    if (category.startsWith('zootopia')) {
+        const { originalEnglish, originalCharacter, english, korean, character, character_en, role, role_en, desc } = req.body;
         index = animals.findIndex(a => a.english === originalEnglish && a.character === originalCharacter);
 
         if (index === -1) {
@@ -143,6 +144,10 @@ app.post('/api/animals/:category', upload.single('imageFile'), (req, res) => {
                 english: english,
                 korean: korean || '',
                 character: character || '',
+                character_en: character_en || '',
+                role: role || '',
+                role_en: role_en || '',
+                desc: desc || '',
                 image: newImageUrl || ''
             });
             saveAnimals(category, animals);
@@ -162,8 +167,12 @@ app.post('/api/animals/:category', upload.single('imageFile'), (req, res) => {
         animals[index] = {
             ...animals[index],
             english: english || animals[index].english,
-            korean: korean || animals[index].korean,
-            character: character || animals[index].character,
+            korean: korean !== undefined ? korean : animals[index].korean,
+            character: character !== undefined ? character : animals[index].character,
+            character_en: character_en !== undefined ? character_en : animals[index].character_en,
+            role: role !== undefined ? role : animals[index].role,
+            role_en: role_en !== undefined ? role_en : animals[index].role_en,
+            desc: desc !== undefined ? desc : animals[index].desc,
             image: newImageUrl || oldImage
         };
     } else {
@@ -208,7 +217,7 @@ const handleDelete = (req, res) => {
     let animals = parseAnimals(category);
     let index = -1;
 
-    if (category === 'zootopia') {
+    if (category.startsWith('zootopia')) {
         index = animals.findIndex(a => a.english === id1 && a.character === (id2 === 'undefined' ? '' : id2));
     } else {
         index = animals.findIndex(a => a.name === id1);
@@ -236,20 +245,20 @@ app.post('/api/audio-update/:category', async (req, res) => {
     const { category } = req.params;
 
     try {
-        if (category === 'zootopia') {
+        if (category.startsWith('zootopia')) {
             const { oldEnglish, oldCharacter, newEnglish, newCharacter, lang } = req.body;
             const targetLang = lang || 'en-US';
-            const foldersToClean = ['animals/zootopia_en', 'animals/zootopia_char', 'tfcs'];
+            const foldersToClean = [`animals/${category}_en`, `animals/${category}_char`, 'tfcs'];
 
             if (oldEnglish) removeAudioIfExists(foldersToClean, oldEnglish);
             if (oldCharacter) removeAudioIfExists(foldersToClean, oldCharacter);
 
             if (newEnglish) {
-                await downloadAudio(newEnglish, targetLang, 'audio/animals/zootopia_en');
+                await downloadAudio(newEnglish, targetLang, `audio/animals/${category}_en`);
                 await downloadAudio(newEnglish, targetLang, 'audio/tfcs');
             }
             if (newCharacter) {
-                await downloadAudio(newCharacter, targetLang, 'audio/animals/zootopia_char');
+                await downloadAudio(newCharacter, targetLang, `audio/animals/${category}_char`);
                 await downloadAudio(newCharacter, targetLang, 'audio/tfcs');
             }
         } else {
@@ -296,6 +305,33 @@ app.get('/', (req, res) => {
         .btn-add { background: #5856d6; color: #fff; margin-bottom: 20px; font-size: 16px; padding: 15px; }
         .file-input { margin-bottom: 15px; font-size: 12px; }
         .paste-hint { font-size: 11px; color: #888; margin-top: -10px; margin-bottom: 10px; display: block; }
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+            transition: opacity 0.3s, bottom 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+        .toast.error {
+            background-color: #ff3b30;
+        }
       </style>
     </head>
     <body>
@@ -303,6 +339,7 @@ app.get('/', (req, res) => {
       
       <div class="tabs">
         <button class="tab-btn active" onclick="switchCategory('zootopia')">주토피아</button>
+        <button class="tab-btn" onclick="switchCategory('zootopia2')">주토피아2</button>
         <button class="tab-btn" onclick="switchCategory('sea')">바다동물</button>
         <button class="tab-btn" onclick="switchCategory('land')">육지동물</button>
         <button class="tab-btn" onclick="switchCategory('insects')">곤충</button>
@@ -316,9 +353,22 @@ app.get('/', (req, res) => {
           <span class="paste-hint">💡 이 칸을 클릭한 뒤 클립보드 이미지를 붙여넣기(Ctrl+V) 할 수 있습니다.</span>
           
           <div id="add-fields-zootopia">
-            <label>이름 (English) *</label><input type="text" id="add-eng" />
-            <label>캐릭터명 (Character)</label><input type="text" id="add-char" />
-            <label>한국어 (Korean)</label><input type="text" id="add-kor" />
+            <label>이름</label>
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+              <input type="text" id="add-char" placeholder="한국어" style="margin-bottom:0;" />
+              <input type="text" id="add-char-en" placeholder="영어" style="margin-bottom:0;" />
+            </div>
+            <label>직책, 배역</label>
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+              <input type="text" id="add-role" placeholder="한국어" style="margin-bottom:0;" />
+              <input type="text" id="add-role-en" placeholder="영어" style="margin-bottom:0;" />
+            </div>
+            <label>동물 종(한국어) / 동물 종(영어) * (영어 필수)</label>
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+              <input type="text" id="add-kor" placeholder="한국어" style="margin-bottom:0;" />
+              <input type="text" id="add-eng" placeholder="영어" style="margin-bottom:0;" />
+            </div>
+            <label>간략한 인물 설명(한국어)</label><input type="text" id="add-desc" />
           </div>
           
           <div id="add-fields-basic" style="display:none;">
@@ -336,6 +386,26 @@ app.get('/', (req, res) => {
 
       <script>
         let currentCategory = 'zootopia';
+        let toastTimeout;
+
+        function showToast(msg, isError = false) {
+            let toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.className = 'toast';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            if (isError) toast.classList.add('error');
+            else toast.classList.remove('error');
+            
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
         function safeNameFront(text) {
             if (!text) return '';
@@ -351,30 +421,36 @@ app.get('/', (req, res) => {
             const audio = new Audio(url);
             
             const originalText = btn.innerHTML;
-            const originalBg = btn.style.backgroundColor;
-            const originalColor = btn.style.color;
+            const originalOpacity = btn.style.opacity || '1';
             
-            btn.innerHTML = '🔊 재생 중...';
-            btn.style.backgroundColor = '#ff9500';
-            btn.style.color = '#fff';
+            btn.innerHTML = '🔊';
+            btn.style.opacity = '0.5';
             btn.disabled = true;
 
+            let isRestored = false;
             const restoreBtn = () => {
+                if (isRestored) return;
+                isRestored = true;
                 btn.innerHTML = originalText;
-                btn.style.backgroundColor = originalBg;
-                btn.style.color = originalColor;
+                btn.style.opacity = originalOpacity;
                 btn.disabled = false;
             };
 
             audio.onended = restoreBtn;
             audio.onerror = () => {
-                 alert('음성 파일을 찾을 수 없습니다. (먼저 음성파일 재생성 버튼을 눌러주세요)');
+                 setTimeout(() => {
+                     showToast('음성 파일을 찾을 수 없습니다. (먼저 음성파일 재생성 버튼을 눌러주세요)', true);
+                 }, 10);
                  restoreBtn();
             };
             audio.play().catch(e => {
                 console.error(e);
-                alert('재생 오류가 발생했습니다.');
                 restoreBtn();
+                if (e.name !== 'NotAllowedError' && e.name !== 'AbortError') {
+                    setTimeout(() => {
+                        showToast('재생 오류가 발생했습니다.', true);
+                    }, 10);
+                }
             });
         }
 
@@ -383,7 +459,7 @@ app.get('/', (req, res) => {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector(\`.tab-btn[onclick="switchCategory('\${cat}')"]\`).classList.add('active');
             
-            if (currentCategory === 'zootopia') {
+            if (currentCategory.startsWith('zootopia')) {
                 document.getElementById('add-fields-zootopia').style.display = 'block';
                 document.getElementById('add-fields-basic').style.display = 'none';
             } else {
@@ -401,7 +477,7 @@ app.get('/', (req, res) => {
           const container = document.getElementById('container');
           container.innerHTML = '';
           
-          data.forEach(animal => {
+          data.forEach((animal, idx) => {
             const card = document.createElement('div');
             card.className = 'card';
             card.onclick = function() {
@@ -409,63 +485,71 @@ app.get('/', (req, res) => {
               this.classList.add('active');
             };
             
-            if (currentCategory === 'zootopia') {
+            if (currentCategory.startsWith('zootopia')) {
                 card.innerHTML = \`
-                <img src="/public\${animal.image}" alt="\${animal.english}" id="img-\${animal.english}">
+                <img src="/public\${animal.image}" alt="\${animal.english}" id="img-zoo-\${idx}">
                 <span class="paste-hint">💡 이 카드를 선택 후 클립보드 이미지를 붙여넣기 할 수 있습니다.</span>
                 
-                <label>이름 (English)</label>
+                <label>이름(한국어) / 이름(영어)</label>
                 <div style="display:flex; gap:5px; margin-bottom:10px;">
-                    <input type="text" id="eng-\${animal.english}" value="\${animal.english}" style="margin-bottom:0;" />
-                    <button type="button" data-name="\${animal.english.replace(/"/g, '&quot;')}" onclick="playAudioFeedback(this, '/public/audio/animals/zootopia_en/', this.getAttribute('data-name'))" style="width:auto; font-size:12px; margin-bottom:0;">▶️ 듣기</button>
+                    <input type="text" id="char-zoo-\${idx}" value="\${animal.character || ''}" placeholder="한국어" style="margin-bottom:0;" />
+                    <input type="text" id="char-en-zoo-\${idx}" value="\${animal.character_en || ''}" placeholder="영어" style="margin-bottom:0;" />
+                    <button type="button" data-name="\${(animal.character_en||animal.character||'').replace(/\"/g, '&quot;')}" onclick="playAudioFeedback(this, '/public/audio/animals/' + currentCategory + '_char/', this.getAttribute('data-name'))" style="width:36px; height:36px; padding:0; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; margin-bottom:0;" title="듣기">▶️</button>
                 </div>
-                
-                <label>캐릭터명 (Character)</label>
+
+                <label>직책, 배역(한국어) / 직책, 배역(영어)</label>
                 <div style="display:flex; gap:5px; margin-bottom:10px;">
-                    <input type="text" id="char-\${animal.english}" value="\${animal.character}" style="margin-bottom:0;" />
-                    <button type="button" data-name="\${(animal.character||'').replace(/"/g, '&quot;')}" onclick="playAudioFeedback(this, '/public/audio/animals/zootopia_char/', this.getAttribute('data-name'))" style="width:auto; font-size:12px; margin-bottom:0;">▶️ 듣기</button>
+                    <input type="text" id="role-zoo-\${idx}" value="\${animal.role || ''}" placeholder="한국어" style="margin-bottom:0;" />
+                    <input type="text" id="role-en-zoo-\${idx}" value="\${animal.role_en || ''}" placeholder="영어" style="margin-bottom:0;" />
                 </div>
-                
-                <label>한국어 (Korean)</label>
-                <input type="text" id="kor-\${animal.english}" value="\${animal.korean}" />
+
+                <label>동물 종(한국어) / 동물 종(영어)</label>
+                <div style="display:flex; gap:5px; margin-bottom:10px;">
+                    <input type="text" id="kor-zoo-\${idx}" value="\${animal.korean || ''}" placeholder="한국어" style="margin-bottom:0;" />
+                    <input type="text" id="eng-zoo-\${idx}" value="\${animal.english || ''}" placeholder="영어" style="margin-bottom:0;" />
+                    <button type="button" data-name="\${(animal.english||'').replace(/\"/g, '&quot;')}" onclick="playAudioFeedback(this, '/public/audio/animals/' + currentCategory + '_en/', this.getAttribute('data-name'))" style="width:36px; height:36px; padding:0; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; margin-bottom:0;" title="듣기">▶️</button>
+                </div>
+
+                <label>간략한 인물 설명(한국어)</label>
+                <input type="text" id="desc-zoo-\${idx}" value="\${animal.desc || ''}" style="margin-bottom:10px;" />
                 
                 <label>이미지 변경</label>
-                <input type="file" id="file-\${animal.english}" class="file-input" accept="image/*" />
+                <input type="file" id="file-zoo-\${idx}" class="file-input" accept="image/*" />
                 
                 <div style="display:flex; gap:5px; margin-bottom: 5px;">
-                    <select id="lang-\${animal.english}" style="flex:1; padding:5px; border-radius:4px;">
+                    <select id="lang-zoo-\${idx}" style="flex:1; padding:5px; border-radius:4px;">
                         <option value="en-US">영어 (미국식)</option>
                         <option value="ko-KR">한국어 (한국식)</option>
                     </select>
                 </div>
                 
-                <button class="btn-update" onclick="updateAnimalZoo('\${animal.english.replace(/'/g, \"\\\\'\")}', '\${(animal.character||'').replace(/'/g, \"\\\\'\")}')">데이터/이미지 저장</button>
-                <button class="btn-audio" onclick="updateAudioZoo('\${animal.english.replace(/'/g, \"\\\\'\")}', '\${(animal.character||'').replace(/'/g, \"\\\\'\")}')">음성파일 재생성</button>
+                <button class="btn-update" onclick="updateAnimalZoo('\${animal.english.replace(/'/g, \"\\\\'\")}', '\${(animal.character||'').replace(/'/g, \"\\\\'\")}', \${idx})">데이터/이미지 저장</button>
+                <button class="btn-audio" onclick="updateAudioZoo('\${animal.english.replace(/'/g, \"\\\\'\")}', '\${(animal.character||'').replace(/'/g, \"\\\\'\")}', \${idx})">음성파일 재생성</button>
                 <button class="btn-delete" onclick="deleteAnimal('\${animal.english.replace(/'/g, \"\\\\'\")}', '\${(animal.character||'').replace(/'/g, \"\\\\'\")}')">삭제</button>
                 \`;
             } else {
                 card.innerHTML = \`
-                <img src="/public\${animal.image}" alt="\${animal.name}" id="img-\${animal.name}">
+                <img src="/public\${animal.image}" alt="\${animal.name}" id="img-basic-\${idx}">
                 <span class="paste-hint">💡 이 카드를 선택 후 클립보드 이미지를 붙여넣기 할 수 있습니다.</span>
                 
                 <label>이름 (English)</label>
                 <div style="display:flex; gap:5px; margin-bottom:10px;">
-                    <input type="text" id="name-\${animal.name}" value="\${animal.name}" style="margin-bottom:0;" />
-                    <button type="button" data-name="\${animal.name.replace(/"/g, '&quot;')}" onclick="playAudioFeedback(this, '/public/audio/animals/basic/', this.getAttribute('data-name'))" style="width:auto; font-size:12px; margin-bottom:0;">▶️ 듣기</button>
+                    <input type="text" id="name-basic-\${idx}" value="\${animal.name}" style="margin-bottom:0;" />
+                    <button type="button" data-name="\${animal.name.replace(/\"/g, '&quot;')}" onclick="playAudioFeedback(this, '/public/audio/animals/basic/', this.getAttribute('data-name'))" style="width:36px; height:36px; padding:0; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; margin-bottom:0;" title="듣기">▶️</button>
                 </div>
                 
                 <label>이미지 변경</label>
-                <input type="file" id="file-\${animal.name}" class="file-input" accept="image/*" />
+                <input type="file" id="file-basic-\${idx}" class="file-input" accept="image/*" />
                 
                 <div style="display:flex; gap:5px; margin-bottom: 5px;">
-                    <select id="lang-\${animal.name}" style="flex:1; padding:5px; border-radius:4px;">
+                    <select id="lang-basic-\${idx}" style="flex:1; padding:5px; border-radius:4px;">
                         <option value="en-US">영어 (미국식)</option>
                         <option value="ko-KR">한국어 (한국식)</option>
                     </select>
                 </div>
                 
-                <button class="btn-update" onclick="updateAnimalBasic('\${animal.name.replace(/'/g, \"\\\\'\")}')">데이터/이미지 저장</button>
-                <button class="btn-audio" onclick="updateAudioBasic('\${animal.name.replace(/'/g, \"\\\\'\")}')">음성파일 재생성</button>
+                <button class="btn-update" onclick="updateAnimalBasic('\${animal.name.replace(/'/g, \"\\\\'\")}', \${idx})">데이터/이미지 저장</button>
+                <button class="btn-audio" onclick="updateAudioBasic('\${animal.name.replace(/'/g, \"\\\\'\")}', \${idx})">음성파일 재생성</button>
                 <button class="btn-delete" onclick="deleteAnimal('\${animal.name.replace(/'/g, \"\\\\'\")}', '')">삭제</button>
                 \`;
             }
@@ -473,31 +557,46 @@ app.get('/', (req, res) => {
           });
         }
 
-        async function updateAnimalZoo(originalEnglish, originalCharacter) {
-          const engInput = document.getElementById(\`eng-\${originalEnglish}\`).value;
-          const charInput = document.getElementById(\`char-\${originalEnglish}\`).value;
-          const korInput = document.getElementById(\`kor-\${originalEnglish}\`).value;
-          const fileInput = document.getElementById(\`file-\${originalEnglish}\`).files[0];
+        async function updateAnimalZoo(originalEnglish, originalCharacter, idx) {
+          const engInput = document.getElementById(\`eng-zoo-\${idx}\`).value;
+          const charInput = document.getElementById(\`char-zoo-\${idx}\`).value;
+          let charEnInput = '';
+          const charEnEl = document.getElementById(\`char-en-zoo-\${idx}\`);
+          if (charEnEl) charEnInput = charEnEl.value;
+
+          const korInput = document.getElementById(\`kor-zoo-\${idx}\`).value;
+          const roleInput = document.getElementById(\`role-zoo-\${idx}\`).value;
+          
+          let roleEnInput = '';
+          const roleEnEl = document.getElementById(\`role-en-zoo-\${idx}\`);
+          if (roleEnEl) roleEnInput = roleEnEl.value;
+          
+          const descInput = document.getElementById(\`desc-zoo-\${idx}\`).value;
+          const fileInput = document.getElementById(\`file-zoo-\${idx}\`).files[0];
           
           const formData = new FormData();
           formData.append('originalEnglish', originalEnglish);
           formData.append('originalCharacter', originalCharacter);
           formData.append('english', engInput);
           formData.append('character', charInput);
+          formData.append('character_en', charEnInput);
           formData.append('korean', korInput);
+          formData.append('role', roleInput);
+          formData.append('role_en', roleEnInput);
+          formData.append('desc', descInput);
           if (fileInput) formData.append('imageFile', fileInput);
 
           const res = await fetch(\`/api/animals/\${currentCategory}\`, { method: 'POST', body: formData });
           const result = await res.json();
           if (result.success) {
-            alert('저장되었습니다.');
+            showToast('저장되었습니다.');
             loadAnimals();
-          } else { alert('오류 발생'); }
+          } else { showToast('오류 발생', true); }
         }
 
-        async function updateAnimalBasic(originalName) {
-          const nameInput = document.getElementById(\`name-\${originalName}\`).value;
-          const fileInput = document.getElementById(\`file-\${originalName}\`).files[0];
+        async function updateAnimalBasic(originalName, idx) {
+          const nameInput = document.getElementById(\`name-basic-\${idx}\`).value;
+          const fileInput = document.getElementById(\`file-basic-\${idx}\`).files[0];
           
           const formData = new FormData();
           formData.append('originalName', originalName);
@@ -507,9 +606,9 @@ app.get('/', (req, res) => {
           const res = await fetch(\`/api/animals/\${currentCategory}\`, { method: 'POST', body: formData });
           const result = await res.json();
           if (result.success) {
-            alert('저장되었습니다.');
+            showToast('저장되었습니다.');
             loadAnimals();
-          } else { alert('오류 발생'); }
+          } else { showToast('오류 발생', true); }
         }
 
         async function addAnimal() {
@@ -517,19 +616,27 @@ app.get('/', (req, res) => {
           const fileInput = document.getElementById('add-file').files[0];
           if (fileInput) formData.append('imageFile', fileInput);
 
-          if (currentCategory === 'zootopia') {
+          if (currentCategory.startsWith('zootopia')) {
               const engInput = document.getElementById('add-eng').value;
               const charInput = document.getElementById('add-char').value;
+              const charEnInput = document.getElementById('add-char-en').value;
               const korInput = document.getElementById('add-kor').value;
-              if (!engInput) return alert('영어 이름은 필수입니다.');
+              const roleInput = document.getElementById('add-role').value;
+              const roleEnInput = document.getElementById('add-role-en').value;
+              const descInput = document.getElementById('add-desc').value;
+              if (!engInput) { showToast('동물 종(영어)은 필수입니다.', true); return; }
               
               formData.append('originalEnglish', ''); 
               formData.append('english', engInput);
               formData.append('character', charInput);
+              formData.append('character_en', charEnInput);
               formData.append('korean', korInput);
+              formData.append('role', roleInput);
+              formData.append('role_en', roleEnInput);
+              formData.append('desc', descInput);
           } else {
               const nameInput = document.getElementById('add-name').value;
-              if (!nameInput) return alert('영어 이름은 필수입니다.');
+              if (!nameInput) { showToast('영어 이름은 필수입니다.', true); return; }
               
               formData.append('originalName', '');
               formData.append('name', nameInput);
@@ -538,29 +645,33 @@ app.get('/', (req, res) => {
           const res = await fetch(\`/api/animals/\${currentCategory}\`, { method: 'POST', body: formData });
           const result = await res.json();
           if (result.success) {
-            alert('추가되었습니다.');
+            showToast('추가되었습니다.');
             document.getElementById('add-form-container').style.display='none';
             document.getElementById('add-eng').value = '';
             document.getElementById('add-char').value = '';
+            if(document.getElementById('add-char-en')) document.getElementById('add-char-en').value = '';
             document.getElementById('add-kor').value = '';
+            if(document.getElementById('add-role')) document.getElementById('add-role').value = '';
+            if(document.getElementById('add-role-en')) document.getElementById('add-role-en').value = '';
+            if(document.getElementById('add-desc')) document.getElementById('add-desc').value = '';
             document.getElementById('add-name').value = '';
             document.getElementById('add-file').value = '';
             document.getElementById('add-preview').style.display = 'none';
             loadAnimals();
-          } else { alert('오류 발생: ' + (result.error || '')); }
+          } else { showToast('오류 발생: ' + (result.error || ''), true); }
         }
 
         async function deleteAnimal(id1, id2) {
           if (!confirm(\`정말 삭제하시겠습니까?\`)) return;
           let url = \`/api/animals/\${currentCategory}/\${encodeURIComponent(id1)}\`;
-          if (currentCategory === 'zootopia') url += \`/\${encodeURIComponent(id2)}\`;
+          if (currentCategory.startsWith('zootopia')) url += \`/\${encodeURIComponent(id2)}\`;
           
           const res = await fetch(url, { method: 'DELETE' });
           const result = await res.json();
           if (result.success) {
-            alert('삭제되었습니다.');
+            showToast('삭제되었습니다.');
             loadAnimals();
-          } else { alert('오류 발생'); }
+          } else { showToast('오류 발생', true); }
         }
 
         function showAddForm() {
@@ -576,10 +687,11 @@ app.get('/', (req, res) => {
           }
         }
 
-        async function updateAudioZoo(originalEnglish, originalCharacter) {
-          const engInput = document.getElementById(\`eng-\${originalEnglish}\`).value;
-          const charInput = document.getElementById(\`char-\${originalEnglish}\`).value;
-          const lang = document.getElementById(\`lang-\${originalEnglish}\`).value;
+        async function updateAudioZoo(originalEnglish, originalCharacter, idx) {
+          const engInput = document.getElementById(\`eng-zoo-\${idx}\`).value;
+          const charEnEl = document.getElementById(\`char-en-zoo-\${idx}\`);
+          const charInput = charEnEl && charEnEl.value ? charEnEl.value : document.getElementById(\`char-zoo-\${idx}\`).value;
+          const lang = document.getElementById(\`lang-zoo-\${idx}\`).value;
 
           const res = await fetch(\`/api/audio-update/\${currentCategory}\`, {
             method: 'POST',
@@ -591,13 +703,13 @@ app.get('/', (req, res) => {
             })
           });
           const result = await res.json();
-          if (result.success) alert('음성이 재생성/업데이트 되었습니다.');
-          else alert('음성 재생성/업데이트 실패');
+          if (result.success) showToast('음성이 재생성/업데이트 되었습니다.');
+          else showToast('음성 재생성/업데이트 실패', true);
         }
 
-        async function updateAudioBasic(originalName) {
-          const nameInput = document.getElementById(\`name-\${originalName}\`).value;
-          const lang = document.getElementById(\`lang-\${originalName}\`).value;
+        async function updateAudioBasic(originalName, idx) {
+          const nameInput = document.getElementById(\`name-basic-\${idx}\`).value;
+          const lang = document.getElementById(\`lang-basic-\${idx}\`).value;
 
           const res = await fetch(\`/api/audio-update/\${currentCategory}\`, {
             method: 'POST',
@@ -605,8 +717,8 @@ app.get('/', (req, res) => {
             body: JSON.stringify({ oldName: originalName, newName: nameInput, lang })
           });
           const result = await res.json();
-          if (result.success) alert('음성이 재생성/업데이트 되었습니다.');
-          else alert('음성 재생성/업데이트 실패');
+          if (result.success) showToast('음성이 재생성/업데이트 되었습니다.');
+          else showToast('음성 재생성/업데이트 실패', true);
         }
 
         loadAnimals();
@@ -630,7 +742,7 @@ app.get('/', (req, res) => {
           if (!activeCard && document.activeElement) activeCard = document.activeElement.closest('.card');
 
           if (!activeCard) {
-             alert('업데이트할 캐릭터 카드를 먼저 클릭하여 선택한 후 붙여넣기 해주세요.');
+             showToast('업데이트할 캐릭터 카드를 먼저 클릭하여 선택한 후 붙여넣기 해주세요.', true);
              return;
           }
 
@@ -641,7 +753,7 @@ app.get('/', (req, res) => {
              const fileInput = document.getElementById('add-file');
              fileInput.files = dataTransfer.files;
              document.getElementById('add-preview').style.display = 'block';
-             alert('클립보드 이미지가 추가 항목에 임시 입력되었습니다.');
+             showToast('클립보드 이미지가 추가 항목에 임시 입력되었습니다.');
              return;
           }
           
@@ -653,7 +765,7 @@ app.get('/', (req, res) => {
                 const blobUrl = URL.createObjectURL(imageFile);
                 imgElement.src = blobUrl;
              }
-             alert('클립보드 이미지가 교체 대기열에 들어갔습니다. 저장을 눌러 반영하세요.');
+             showToast('클립보드 이미지가 교체 대기열에 들어갔습니다. 저장을 눌러 반영하세요.');
           }
         });
       </script>

@@ -41,7 +41,7 @@ function App() {
   const getThemeInfo = () => {
     const mode = gameState.inGame ? gameState.gameConfig.mode : gameState.selectedMode;
 
-    let bg = 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)';
+    let bg = 'linear-gradient(135deg, #e0c3fc 0%, #bca5ff 100%)';
     let themeColor = '#e0c3fc';
 
     if (mode === 'english') {
@@ -124,19 +124,23 @@ function App() {
       />
 
       {!gameState.inGame && (
-        <Menu
-          currentView={gameState.menuView || 'main'}
-          selectedMode={gameState.selectedMode}
-          selectedSubMode={gameState.selectedSubMode}
-          onNavigate={onNavigateMenu}
-          onStartGame={onStartGame}
-        />
+        <div className="content-wrapper">
+          <Menu
+            currentView={gameState.menuView || 'main'}
+            selectedMode={gameState.selectedMode}
+            selectedSubMode={gameState.selectedSubMode}
+            onNavigate={onNavigateMenu}
+            onStartGame={onStartGame}
+          />
+        </div>
       )}
       {gameState.inGame && (
-        <Game
-          mode={gameState.gameConfig}
-          onBack={onBackToMenu}
-        />
+        <div className="content-wrapper">
+          <Game
+            mode={gameState.gameConfig}
+            onBack={onBackToMenu}
+          />
+        </div>
       )}
     </div>
   );

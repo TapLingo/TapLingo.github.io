@@ -481,244 +481,396 @@
   ],
   "ZOOTOPIA_ANIMALS": [
     {
-      "english": "Rabbit",
-      "korean": "토끼",
-      "character": "Judy Hopps",
+      "english": "European Rabbit",
+      "korean": "굴토끼",
+      "character_en": "Judy Hopps",
+      "character": "주디 홉스",
+      "role_en": "ZPD Police Officer",
+      "role": "ZPD 경찰관",
+      "desc": "세상을 더 좋게 만들겠다는 굳은 의지를 가진 주토피아 최초의 토끼 경찰로, 편견을 이겨내고 연쇄 실종 사건을 해결합니다.",
       "image": "/animals/zootopia/judy_hopps.png"
     },
     {
       "english": "Red Fox",
-      "korean": "여우",
-      "character": "Nick Wilde",
+      "korean": "붉은여우",
+      "character_en": "Nick Wilde",
+      "character": "닉 와일드",
+      "role_en": "Con-artist → ZPD Police Officer",
+      "role": "사기꾼 → ZPD 경찰관",
+      "desc": "냉소적인 성격의 뒷골목 사기꾼이었으나, 주디를 도와 사건을 해결한 뒤 주토피아 최초의 여우 경찰이자 파트너가 됩니다.",
       "image": "/animals/zootopia/nick_wilde.png"
     },
     {
       "english": "Cape Buffalo",
-      "korean": "물소",
-      "character": "Chief Bogo",
+      "korean": "아프리카물소",
+      "character_en": "Chief Bogo",
+      "character": "보고 서장",
+      "role_en": "Chief at ZPD",
+      "role": "ZPD 제1구역 서장",
+      "desc": "엄격한 성격으로 처음엔 주디에게 주차 단속 임무만 맡겼으나, 나중에는 그녀를 인정하는 경찰국의 든든한 서장입니다.",
       "image": "/animals/zootopia/chief_bogo.png"
+    },
+    {
+      "english": "Sheep",
+      "korean": "양",
+      "character_en": "Dawn Bellwether",
+      "character": "던 벨웨더",
+      "role_en": "Deputy Mayor → Mayor",
+      "role": "주토피아 부시장 → 임시 시장",
+      "desc": "시장에게 무시당하며 살던 온화해 보이는 부시장이지만, 포식자들을 야수화시켜 사회적 공포를 조장한 1편의 메인 빌런입니다.",
+      "image": "/animals/zootopia/dawn_bellwether.png"
     },
     {
       "english": "Cheetah",
       "korean": "치타",
-      "character": "Benjamin Clawhauser",
+      "character_en": "Benjamin Clawhauser",
+      "character": "벤자민 클로하우저",
+      "role_en": "ZPD Dispatcher / Desk Sergeant",
+      "role": "ZPD 안내원 및 무전 담당",
+      "desc": "경찰서 로비에서 일하는 상냥하고 수다스러운 경찰로, 팝스타 가젤과 도넛을 각별히 사랑합니다.",
       "image": "/animals/zootopia/benjamin_clawhauser.png"
     },
     {
       "english": "Lion",
       "korean": "사자",
-      "character": "Mayor Lionheart",
+      "character_en": "Leodore Lionheart",
+      "character": "리어도어 라이언하트",
+      "role_en": "Mayor of Zootopia",
+      "role": "주토피아 52대 시장",
+      "desc": "권위적인 시장으로, 포식자들이 야수화되는 사태가 알려지면 지지율이 떨어질까 봐 이들을 비밀리에 불법 감금하다 체포됩니다.",
       "image": "/animals/zootopia/mayor_lionheart.png"
     },
     {
-      "english": "Sheep",
-      "korean": "양",
-      "character": "Dawn Bellwether",
-      "image": "/animals/zootopia/dawn_bellwether.png"
+      "english": "Arctic Shrew",
+      "korean": "북극뒤쥐",
+      "character_en": "Mr. Big",
+      "character": "미스터 빅",
+      "role_en": "Crime Lord",
+      "role": "툰드라타운 범죄 조직 보스",
+      "desc": "거대 마피아 조직의 대부로, 주디가 자신의 딸을 구해준 은혜를 갚기 위해 이들의 수사를 적극적으로 돕습니다.",
+      "image": "/animals/zootopia/mr_big.png"
     },
     {
-      "english": "Sloth",
-      "korean": "나무늘보",
-      "character": "Flash",
-      "image": "/animals/zootopia/flash.png"
-    },
-    {
-      "english": "Elephant",
-      "korean": "코끼리",
-      "character": "Francine Pennington",
-      "image": "/animals/zootopia/francine_pennington.png"
-    },
-    {
-      "english": "Tiger",
-      "korean": "호랑이",
-      "character": "Officer Tiger",
-      "image": "/animals/zootopia/officer_tiger.png"
-    },
-    {
-      "english": "Gazelle",
-      "korean": "가젤",
-      "character": "Gazelle",
+      "english": "Thomson's Gazelle",
+      "korean": "톰슨가젤",
+      "character_en": "Gazelle",
+      "character": "가젤",
+      "role_en": "Pop Music Star",
+      "role": "팝 가수",
+      "desc": "주토피아 최고의 인기 가수로, 차별과 분열에 반대하며 평화를 호소하는 사회 운동가 격인 인물입니다.",
       "image": "/animals/zootopia/gazelle.png"
     },
     {
-      "english": "Otter",
-      "korean": "수달",
-      "character": "Mrs. Otterton",
-      "image": "/animals/zootopia/otterton.png"
+      "english": "Three-toed Sloth",
+      "korean": "3발가락 나무늘보",
+      "character_en": "Flash Slothmore",
+      "character": "플래시 슬로스모어",
+      "role_en": "DMV Worker",
+      "role": "포유류 차량국 직원",
+      "desc": "나무늘보답게 행동과 말이 엄청나게 느리지만, 사실은 스포츠카를 몰며 과속을 즐기는 폭주족 드라이버입니다.",
+      "image": "/animals/zootopia/flash.png"
     },
     {
-      "english": "Weasel",
+      "english": "Fennec Fox",
+      "korean": "사막여우",
+      "character_en": "Finnick",
+      "character": "핀닉",
+      "role_en": "Partner in Crime",
+      "role": "사기꾼 동업자",
+      "desc": "귀여운 아기 코끼리로 변장해 닉의 사기 행각을 도왔지만, 실제로는 걸걸한 목소리를 지닌 동업자입니다.",
+      "image": "/animals/zootopia/finnick.png"
+    },
+    {
+      "english": "European Rabbit",
+      "korean": "굴토끼",
+      "character_en": "Stu & Bonnie Hopps",
+      "character": "스튜 & 보니 홉스",
+      "role_en": "Carrot Farmers",
+      "role": "당근 농부",
+      "desc": "주디의 부모님으로, 처음엔 딸의 경찰의 꿈을 반대했으나 점차 편견을 극복하고 '밤의 울음꾼'에 대한 중요한 단서를 줍니다.",
+      "image": "/animals/zootopia/image_1771809421768.png"
+    },
+    {
+      "english": "Red Fox",
+      "korean": "붉은여우",
+      "character_en": "Gideon Grey",
+      "character": "기디온 그레이",
+      "role_en": "Bully → Baker",
+      "role": "동네 불량배 → 제빵사",
+      "desc": "어린 시절 주디를 괴롭혔지만, 어른이 된 후 자신의 잘못을 반성하고 버니빌 최고의 제빵사가 되었습니다.",
+      "image": "/animals/zootopia/image_1771809089720.png"
+    },
+    {
+      "english": "Least Weasel",
       "korean": "족제비",
-      "character": "Duke Weaselton",
+      "character_en": "Duke Weaselton",
+      "character": "듀크 위즐튼",
+      "role_en": "Small-time Crook",
+      "role": "좀도둑 / 불법 상인",
+      "desc": "주디에게 체포된 전적이 있는 얍삽한 범죄자로, '밤의 울음꾼' 구근을 훔쳐 흑막에게 팔아넘긴 장본인입니다.",
       "image": "/animals/zootopia/duke_weaselton.png"
     },
     {
       "english": "Arctic Shrew",
       "korean": "북극뒤쥐",
-      "character": "Mr. Big",
-      "image": "/animals/zootopia/mr_big.png"
+      "character_en": "Fru Fru",
+      "character": "프루프루",
+      "role_en": "Mr. Big's Daughter",
+      "role": "미스터 빅의 딸",
+      "desc": "도넛 조형물에 깔릴 뻔한 것을 주디가 구해주면서 생명의 은인이 되며, 훗날 주디를 자신의 딸 대모로 삼습니다.",
+      "image": "/animals/zootopia/fru_fru.png"
     },
     {
-      "english": "Fennec Fox",
-      "korean": "사막여우",
-      "character": "Finnick",
-      "image": "/animals/zootopia/finnick.png"
-    },
-    {
-      "english": "Yak",
-      "korean": "야크",
-      "character": "Yax",
-      "image": "/animals/zootopia/yax.png"
-    },
-    {
-      "english": "Wolf",
-      "korean": "늑대",
-      "character": "Gary",
-      "image": "/animals/zootopia/gary.png"
+      "english": "North American River Otter",
+      "korean": "북아메리카수달",
+      "character_en": "Emmitt & Mrs. Otterton",
+      "character": "에밋 & 레이 오터톤",
+      "role_en": "Florist & Housewife",
+      "role": "원예사 & 가정주부",
+      "desc": "연쇄 실종 사건의 14번째 피해자 부부. 미스터 빅의 정원사였던 에밋은 '밤의 울음꾼'을 맞고 야수화되어 실종되었습니다.",
+      "image": "/animals/zootopia/otterton.png"
     },
     {
       "english": "Black Jaguar",
       "korean": "흑재규어",
-      "character": "Manchas",
+      "character_en": "Renato Manchas",
+      "character": "레나토 만차스",
+      "role_en": "Chauffeur",
+      "role": "리무진 운전기사",
+      "desc": "미스터 빅의 운전기사로 오터톤의 야수화를 목격했으며, 훗날 주디와 닉에게 증언하려다 더그에게 저격당해 본인도 야수화됩니다.",
       "image": "/animals/zootopia/manchas.png"
+    },
+    {
+      "english": "Yak",
+      "korean": "야크",
+      "character_en": "Yax",
+      "character": "약스",
+      "role_en": "Mystic Springs Oasis Owner",
+      "role": "자연주의 클럽 안내원",
+      "desc": "옷을 입지 않는 자연주의 클럽의 주인으로, 본인은 몰랐지만 엄청난 묘사력과 기억력으로 수사의 핵심 단서를 제공합니다.",
+      "image": "/animals/zootopia/yax.png"
+    },
+    {
+      "english": "African Elephant",
+      "korean": "아프리카코끼리",
+      "character_en": "Jerry Jumbeaux Jr.",
+      "character": "제리 점보 주니어",
+      "role_en": "Ice Cream Parlor Owner",
+      "role": "아이스크림 가게 주인",
+      "desc": "코끼리 전용 아이스크림 가게 점장으로, 여우인 닉을 차별해 판매를 거부하다 주디의 위생법 지적에 꼬리를 내립니다.",
+      "image": "/animals/zootopia/jerry_jumbeaux_jr.png"
+    },
+    {
+      "english": "Sheep",
+      "korean": "양",
+      "character_en": "Doug Ramses",
+      "character": "더그 람세스",
+      "role_en": "Chemist / Sniper",
+      "role": "화학자 / 저격수",
+      "desc": "버려진 전철역에서 맹독성 혈청을 제조하고, 포식자들을 표적으로 몰래 저격하여 야수화시킨 범인입니다.",
+      "image": "/animals/zootopia/ram_doug.png"
     },
     {
       "english": "Honey Badger",
       "korean": "벌꿀오소리",
-      "character": "Dr. Madge",
+      "character_en": "Dr. Madge Honey Badger",
+      "character": "마지 허니 배저",
+      "role_en": "Doctor / Scientist",
+      "role": "의사 / 과학자",
+      "desc": "라이언하트 시장을 도와 야수화가 진행된 동물들을 비밀 병동에 격리하고 원인을 분석하던 의사입니다.",
       "image": "/animals/zootopia/dr_madge.png"
     },
     {
-      "english": "Rhinoceros",
-      "korean": "코뿔소",
-      "character": "Officer McHorn",
-      "image": "/animals/zootopia/officer_mchorn.png"
-    },
-    {
-      "english": "Moose",
-      "korean": "무스",
-      "character": "Peter Moosebridge",
-      "image": "/animals/zootopia/peter_moosebridge.png"
-    },
-    {
-      "english": "Pig",
-      "korean": "돼지",
-      "character": "Frantic Pig",
-      "image": "/animals/zootopia/frantic_pig.png"
-    },
-    {
-      "english": "Mouse",
-      "korean": "쥐",
-      "character": "Construction Mouse",
-      "image": "/animals/zootopia/construction_mouse.png"
-    },
-    {
-      "english": "Snow Leopard",
-      "korean": "눈표범",
-      "character": "Fabienne Growley",
-      "image": "/animals/zootopia/fabienne_growley.png"
-    },
-    {
-      "english": "Ram",
-      "korean": "숫양",
-      "character": "Doug",
-      "image": "/animals/zootopia/ram_doug.png"
-    },
-    {
-      "english": "Kudu",
-      "korean": "쿠두",
-      "character": "Bucky Oryx-Antlerson",
-      "image": "/animals/zootopia/bucky_oryx_antlerson.png"
-    },
-    {
-      "english": "Oryx",
-      "korean": "오릭스",
-      "character": "Pronk Oryx-Antlerson",
-      "image": "/animals/zootopia/pronk_oryx_antlerson.png"
-    },
-    {
-      "english": "Sloth",
-      "korean": "나무늘보",
-      "character": "Priscilla",
+      "english": "Three-toed Sloth",
+      "korean": "3발가락 나무늘보",
+      "character_en": "Priscilla Tripletoe",
+      "character": "프리실라 트리플토",
+      "role_en": "DMV Worker",
+      "role": "차량국 직원",
+      "desc": "플래시의 직장 동료이자 연인으로 일처리가 똑같이 매우 느린 인물입니다.",
       "image": "/animals/zootopia/priscilla.png"
+    }
+  ],
+  "ZOOTOPIA2_ANIMALS": [
+    {
+      "english": "European Rabbit",
+      "korean": "굴토끼",
+      "character_en": "Judy Hopps",
+      "character": "주디 홉스",
+      "role_en": "ZPD Police Officer",
+      "role": "ZPD 경찰관",
+      "desc": "수배자가 되는 위험을 무릅쓰고 언더커버 수사에 나서 파충류와 얽힌 거대한 미스터리를 파헤칩니다.",
+      "image": "/animals/zootopia2/image_1771810098853.png"
     },
     {
-      "english": "Elephant",
-      "korean": "코끼리",
-      "character": "Jerry Jumbeaux Jr.",
-      "image": "/animals/zootopia/jerry_jumbeaux_jr.png"
+      "english": "Red Fox",
+      "korean": "붉은여우",
+      "character_en": "Nick Wilde",
+      "character": "닉 와일드",
+      "role_en": "ZPD Police Officer",
+      "role": "ZPD 경찰관",
+      "desc": "위험에 빠진 주디를 구하기 위해 탈옥과 목숨을 건 희생까지 감수하며 활약합니다.",
+      "image": "/animals/zootopia2/image_1771810198266.png"
     },
     {
-      "english": "Elephant",
-      "korean": "코끼리",
-      "character": "Nangi",
-      "image": "/animals/zootopia/nangi.png"
-    },
-    {
-      "english": "Arctic Shrew",
-      "korean": "북극뒤쥐",
-      "character": "Fru Fru",
-      "image": "/animals/zootopia/fru_fru.png"
-    },
-    {
-      "english": "Wolf",
-      "korean": "늑대",
-      "character": "Larry",
-      "image": "/animals/zootopia/larry.png"
-    },
-    {
-      "english": "Hedgehog",
-      "korean": "고슴도치",
-      "character": "Mrs. Hedgehog",
-      "image": "/animals/zootopia/hedgehog.png"
-    },
-    {
-      "english": "Armadillo",
-      "korean": "아르마딜로",
-      "character": "Dharma",
-      "image": "/animals/zootopia/dharma.png"
-    },
-    {
-      "english": "Giraffe",
-      "korean": "기린",
-      "character": "Tall Citizen",
-      "image": "/animals/zootopia/tall_citizen.png"
-    },
-    {
-      "english": "Hamster",
-      "korean": "햄스터",
-      "character": "Business Hamster",
-      "image": "/animals/zootopia/business_hamster.png"
-    },
-    {
-      "english": "Lynx",
-      "korean": "시라소니",
-      "character": "Cattrick Lynxley",
-      "image": "/animals/zootopia/cattrick_lynxley_1771545811816.jpg"
-    },
-    {
-      "english": "Lynx",
-      "korean": "시라소니",
-      "character": "Pawbert Lynxley",
-      "image": "/animals/zootopia/image_1771546132838.png"
-    },
-    {
-      "english": "Horse",
-      "korean": "말",
-      "character": "Brian Winddancer",
-      "image": "/animals/zootopia/image_1771546514484.png"
-    },
-    {
-      "english": "Snake",
-      "korean": "뱀",
-      "character": "Gary De'Snake",
+      "english": "Pit Viper",
+      "korean": "핏 바이퍼 / 살무사",
+      "character_en": "Gary De'Snake",
+      "character": "게리 더 스네이크",
+      "role_en": "Reptilian Rights Activist",
+      "role": "파충류 권리 운동가",
+      "desc": "주토피아의 진짜 설립자였던 증조할머니 '아그네스'의 누명을 벗기기 위해 주디와 닉에게 협력하는 뱀입니다.",
       "image": "/animals/zootopia/image_1771546634580.png"
     },
     {
       "english": "Beaver",
       "korean": "비버",
-      "character": "Nibbles Maplestick",
+      "character_en": "Nibbles Maplestick",
+      "character": "니블스 메이플스틱",
+      "role_en": "Podcaster / Blogger",
+      "role": "팟캐스터 / 블로거",
+      "desc": "습지 시장에 거주하는 파충류 전문가이자 음모론자로, 도망자 신세가 된 닉의 조력자가 되어 사건을 함께 해결합니다.",
       "image": "/animals/zootopia/image_1771546738066.png"
+    },
+    {
+      "english": "Canada Lynx",
+      "korean": "캐나다스라소니",
+      "character_en": "Milton Lynxley",
+      "character": "밀턴 링슬리",
+      "role_en": "Patriarch / Business Magnate",
+      "role": "링슬리 가문 당주 / 기업가",
+      "desc": "2편의 메인 빌런. 주토피아 기후 장벽 설립 가문의 당주로 행세하며 기득권을 지키기 위해 파충류를 탄압합니다.",
+      "image": "/animals/zootopia2/image_1771810297907.png"
+    },
+    {
+      "english": "Canada Lynx",
+      "korean": "캐나다스라소니",
+      "character_en": "Pawbert Lynxley",
+      "character": "포버트 링슬리",
+      "role_en": "Youngest Son",
+      "role": "밀턴 링슬리의 차남",
+      "desc": "가족들에게 인정받기 위해 주디와 게리를 돕는 척 접근했다가, 배신하고 게리를 동사시키려 한 서브 빌런입니다.",
+      "image": "/animals/zootopia/image_1771546132838.png"
+    },
+    {
+      "english": "Canada Lynx",
+      "korean": "캐나다스라소니",
+      "character_en": "Cattrick & Kitty Lynxley",
+      "character": "캐트릭 & 키티 링슬리",
+      "role_en": "Eldest Son & Daughter",
+      "role": "밀턴의 장남 & 장녀",
+      "desc": "쌍둥이 남매로 계승권을 얻기 위해 동생인 포버트를 무시하며 아버지의 악행에 동참하는 일원입니다.",
+      "image": "/animals/zootopia/cattrick_lynxley_1771545811816.jpg"
+    },
+    {
+      "english": "Canada Lynx",
+      "korean": "캐나다스라소니",
+      "character_en": "Ebenezer Lynxley",
+      "character": "에버니저 링슬리",
+      "role_en": "Alleged Architect",
+      "role": "링슬리 가문 초대 당주",
+      "desc": "과거 아그네스의 기후 장벽 특허를 가로채고 살인 누명을 씌워 파충류들을 추방한 만악의 근원입니다.",
+      "image": "/animals/zootopia2/image_1771810360543.png"
+    },
+    {
+      "english": "Clydesdale Horse",
+      "korean": "클라이즈데일 말",
+      "character_en": "Brian Winddancer",
+      "character": "브라이언 윈드댄서",
+      "role_en": "Mayor of Zootopia",
+      "role": "주토피아 신임 시장",
+      "desc": "배우 출신의 새로운 시장입니다. 처음에는 밀턴에게 휘둘리지만 각성하여 링슬리 일가를 직접 발차기로 제압합니다.",
+      "image": "/animals/zootopia/image_1771546514484.png"
+    },
+    {
+      "english": "Quokka",
+      "korean": "쿼카",
+      "character_en": "Dr. Fuzzby",
+      "character": "퍼즈비 박사",
+      "role_en": "Psychologist / Therapist",
+      "role": "심리학자 / 상담사",
+      "desc": "ZPD에서 파트너 간의 갈등을 해결하는 '위기에 처한 파트너들' 치료 모임을 이끄는 차분하고 예리한 상담사입니다.",
+      "image": "/animals/zootopia2/image_1771810333714.png"
+    },
+    {
+      "english": "Giant Anteater",
+      "korean": "큰개미핥기",
+      "character_en": "Antony Snootley",
+      "character": "안토니 스누틀리",
+      "role_en": "Smuggler",
+      "role": "범죄자 / 밀수꾼",
+      "desc": "주디와 닉이 초반부에 쫓던 화려한 패션의 밀수꾼으로, 도주 중 경찰들에게 체포됩니다.",
+      "image": "/animals/zootopia2/image_1771810431971.png"
+    },
+    {
+      "english": "Razorback",
+      "korean": "멧돼지 / 레이저백",
+      "character_en": "Captain Hoggbottom & Truffler",
+      "character": "호그바텀 경감 & 트러플러",
+      "role_en": "ZPD Unit",
+      "role": "ZPD 특수부대(S.N.F.R.)",
+      "desc": "도망자 신세가 된 주디와 닉, 게리를 시내 곳곳에서 매섭게 추격하는 엘리트 경찰들입니다.",
+      "image": "/animals/zootopia2/image_1771810453180.png"
+    },
+    {
+      "english": "Zebra",
+      "korean": "얼룩말",
+      "character_en": "Gene Zebraxton & Gene Zebrowski",
+      "character": "진 지브랙스톤 & 진 지브로스키",
+      "role_en": "ZPD Officers / The Zebros",
+      "role": "ZPD 경찰 (지브로 형제)",
+      "desc": " '지브로스(Zebros)'는 닉과 주디의 공을 가로채는 얄미운 라이벌 경찰 듀오로, 사실은 얼룩말(지브락스턴)과 얼룩말로 변장한 말(지브로스키)의 조합입니다.",
+      "image": "/animals/zootopia2/image_1771810489484.png"
+    },
+    {
+      "english": "Hippopotamus",
+      "korean": "하마",
+      "character_en": "Bloats & Higgins",
+      "character": "블로츠 & 히긴스",
+      "role_en": "ZPD Officers",
+      "role": "ZPD 경찰관",
+      "desc": "덩치가 크고 물속에서 엄청나게 빠르게 이동하는 특징을 살려, 습지 시장에서 주디 일행을 무섭게 추격합니다.",
+      "image": "/animals/zootopia2/image_1771810556409.png"
+    },
+    {
+      "english": "Mole",
+      "korean": "두더지",
+      "character_en": "Paul Moledebrandt",
+      "character": "폴 몰데브란트",
+      "role_en": "IT Department Worker",
+      "role": "ZPD IT 부서 직원",
+      "desc": "경찰국 내에서 전산 민원을 처리하며, 클로하우저가 호그바텀의 위치를 추적할 때 컴퓨터를 쓰게 해줍니다.",
+      "image": "/animals/zootopia2/image_1771810624954.png"
+    },
+    {
+      "english": "Walrus",
+      "korean": "바다코끼리",
+      "character_en": "Russ",
+      "character": "러스",
+      "role_en": "Plumber / Water Taxi",
+      "role": "청소부 / 수상 택시 기사",
+      "desc": "니블스의 친구로, 승객을 자기 배 위에 올린 채 배영을 하며 습지 지역을 이동하는 수상 택시 기사입니다.",
+      "image": "/animals/zootopia2/image_1771810650427.png"
+    },
+    {
+      "english": "Plumed Basilisk",
+      "korean": "녹색바실리스크도마뱀",
+      "character_en": "Jesus",
+      "character": "헤수스",
+      "role_en": "Marsh Market Resident",
+      "role": "늪지 시장 거주민",
+      "desc": "파충류 은신처에 사는 카우보이 복장의 도마뱀으로, 주디와 닉을 신뢰해 물 위를 걷는 기술로 이들의 도피를 돕습니다.",
+      "image": "/animals/zootopia2/image_1771810680114.png"
+    },
+    {
+      "english": "Snake",
+      "korean": "뱀",
+      "character_en": "Agnes De'Snake",
+      "character": "아그네스 더 스네이크",
+      "role_en": "Original Founder",
+      "role": "주토피아 진짜 설립자",
+      "desc": "게리의 증조할머니이자 기후 장벽의 진짜 발명가. 링슬리 가문에 특허를 뺏기고 살인 누명을 쓴 비운의 인물입니다.",
+      "image": "/animals/zootopia2/image_1771810746626.png"
     }
   ]
 }
