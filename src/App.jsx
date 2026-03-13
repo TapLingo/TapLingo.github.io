@@ -13,10 +13,12 @@ function App() {
     const order = params.get('order');
     const view = params.get('view') || 'main';
 
+    const casing = params.get('casing');
+
     if (mode && order) {
       return {
         inGame: true,
-        gameConfig: { mode, subMode, order }
+        gameConfig: { mode, subMode, order, casing }
       };
     }
 
@@ -99,6 +101,7 @@ function App() {
       order: config.order
     };
     if (config.subMode) params.sub = config.subMode;
+    if (config.casing) params.casing = config.casing;
     updateUrl(params);
   };
 

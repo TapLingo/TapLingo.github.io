@@ -277,19 +277,30 @@ const Game = ({ mode, onBack }) => {
             nextIndex = getNextRandomIndex(dataset.display.length);
         }
 
-        const newDisplayChar = dataset.display[nextIndex];
+        const rawDisplayChar = dataset.display[nextIndex];
         const newSoundChar = dataset.sound[nextIndex];
 
-        setDisplayChar(newDisplayChar);
-        setSoundChar(newSoundChar);
-        setImageUrl(null);
-
-        if (dataset.sub) {
-            setSubChar(dataset.sub[nextIndex]);
-        } else if (mode.mode === 'english') {
-            setSubChar(newDisplayChar.toLowerCase());
+        if (mode.mode === 'english' && (mode.subMode === 'alphabet' || mode.subMode === 'sounds')) {
+            if (mode.casing === 'upper') {
+                setDisplayChar(rawDisplayChar.toUpperCase());
+                setSubChar('');
+            } else if (mode.casing === 'lower') {
+                setDisplayChar(rawDisplayChar.toLowerCase());
+                setSubChar('');
+            } else {
+                // Default: both (current behavior)
+                setDisplayChar(rawDisplayChar.toUpperCase());
+                setSubChar(rawDisplayChar.toLowerCase());
+            }
         } else {
-            setSubChar('');
+            setDisplayChar(rawDisplayChar);
+            if (dataset.sub) {
+                setSubChar(dataset.sub[nextIndex]);
+            } else if (mode.mode === 'english') {
+                setSubChar(rawDisplayChar.toLowerCase());
+            } else {
+                setSubChar('');
+            }
         }
         setCharacterName('');
         setCharacterDesc('');

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartGame }) => {
+    const [selectedCasing, setSelectedCasing] = React.useState('both');
 
     const handleMainModeSelect = (mode) => {
         if (mode === 'english') {
@@ -30,7 +31,8 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
         onStartGame({
             mode: selectedMode,
             subMode: selectedSubMode,
-            order: order
+            order: order,
+            casing: (selectedMode === 'english' && (selectedSubMode === 'alphabet' || selectedSubMode === 'sounds')) ? selectedCasing : null
         });
     };
 
@@ -370,7 +372,81 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
         return (
             <>
                 <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{modeTitle}</h1>
-                <h2 style={{ fontSize: '1.2rem', fontWeight: '400', opacity: 0.9 }}>{subTitle}</h2>
+                <h2 style={{ fontSize: '1.2rem', fontWeight: '400', opacity: 0.9, marginBottom: '2rem' }}>{subTitle}</h2>
+
+                {selectedMode === 'english' && (selectedSubMode === 'alphabet' || selectedSubMode === 'sounds') && (
+                    <div style={{
+                        display: 'flex',
+                        width: '100%',
+                        maxWidth: '350px',
+                        gap: '8px',
+                        marginBottom: '2rem',
+                        background: 'rgba(0, 0, 0, 0.2)',
+                        padding: '6px',
+                        borderRadius: '18px',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+                    }}>
+                        <button
+                            onClick={() => setSelectedCasing('upper')}
+                            style={{
+                                flex: 1,
+                                padding: '12px 5px',
+                                borderRadius: '14px',
+                                background: selectedCasing === 'upper' ? 'white' : 'transparent',
+                                color: selectedCasing === 'upper' ? '#333' : 'white',
+                                border: 'none',
+                                fontSize: '0.95rem',
+                                fontWeight: '700',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                boxShadow: selectedCasing === 'upper' ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                minWidth: 0,
+                                margin: 0
+                            }}
+                        >
+                            대문자
+                        </button>
+                        <button
+                            onClick={() => setSelectedCasing('lower')}
+                            style={{
+                                flex: 1,
+                                padding: '12px 5px',
+                                borderRadius: '14px',
+                                background: selectedCasing === 'lower' ? 'white' : 'transparent',
+                                color: selectedCasing === 'lower' ? '#333' : 'white',
+                                border: 'none',
+                                fontSize: '0.95rem',
+                                fontWeight: '700',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                boxShadow: selectedCasing === 'lower' ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                minWidth: 0,
+                                margin: 0
+                            }}
+                        >
+                            소문자
+                        </button>
+                        <button
+                            onClick={() => setSelectedCasing('both')}
+                            style={{
+                                flex: 1,
+                                padding: '12px 5px',
+                                borderRadius: '14px',
+                                background: selectedCasing === 'both' ? 'white' : 'transparent',
+                                color: selectedCasing === 'both' ? '#333' : 'white',
+                                border: 'none',
+                                fontSize: '0.95rem',
+                                fontWeight: '700',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                boxShadow: selectedCasing === 'both' ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                minWidth: 0,
+                                margin: 0
+                            }}
+                        >
+                            같이
+                        </button>
+                    </div>
+                )}
+
                 <div className="button-group">
                     <button
                         onClick={() => handleOrderSelect('random')}
