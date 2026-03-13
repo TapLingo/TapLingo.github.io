@@ -24,6 +24,7 @@ import {
     ZOOTOPIA2_ANIMALS
 } from '../utils/characters.json';
 import { TFCS_IPA, TFCS_SOUNDS, TFCS_ALPHABETS } from '../utils/tfcs_chars.json';
+import './Game.css';
 
 const Game = ({ mode, onBack }) => {
     const [displayChar, setDisplayChar] = useState('');
@@ -348,14 +349,6 @@ const Game = ({ mode, onBack }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mode]);
 
-    const getBackgroundStyle = () => {
-        if (mode.mode === 'english') return 'var(--gradient-english)';
-        if (mode.mode === 'hangul') return 'var(--gradient-hangul)';
-        if (mode.mode === 'number') return 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-        if (mode.mode === 'animals') return 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';
-        return 'var(--gradient-menu)';
-    };
-
     const handlePlaySound = (e) => {
         if (e && e.stopPropagation) e.stopPropagation();
 
@@ -381,80 +374,28 @@ const Game = ({ mode, onBack }) => {
             className="game-container"
             onClick={handlePlaySound} // Screen tap plays sound
             style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                cursor: 'pointer',
-                background: imageUrl ? '#050505' : 'transparent',
-                userSelect: 'none',
-                zIndex: 100,
-                overflow: 'hidden'
+                background: imageUrl ? '#050505' : 'transparent'
             }}
         >
             {/* Header Controls */}
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                padding: '20px',
-                paddingTop: 'calc(max(env(safe-area-inset-top), 20px) + 10px)', // Reduced spacing
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                zIndex: 10,
-                pointerEvents: 'none' // Let clicks pass through to container
-            }}>
+            <div className="game-header">
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
                         onBack();
                     }}
-                    style={{
-                        fontSize: '1rem',
-                        padding: '0.5rem 1rem',
-                        background: 'rgba(0,0,0,0.5)',
-                        color: 'white',
-                        backdropFilter: 'blur(5px)',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        pointerEvents: 'auto', // Re-enable clicks
-                        flexShrink: 0,
-                        width: 'auto' // Override global button width
-                    }}
+                    className="header-button"
                 >
                     ← 뒤로
                 </button>
 
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px' }}>
+                <div className="header-controls">
                     <button
                         onClick={toggleAutoPlay}
-                        style={{
-                            fontSize: '1rem',
-                            padding: '0.5rem 1rem',
-                            background: isAutoPlayEnabled ? 'rgba(76, 175, 80, 0.8)' : 'rgba(0, 0, 0, 0.5)',
-                            color: 'white',
-                            backdropFilter: 'blur(5px)',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            borderRadius: '12px',
-                            cursor: 'pointer',
-                            pointerEvents: 'auto', // Re-enable clicks
-                            marginBottom: '5px',
-                            whiteSpace: 'nowrap',
-                            width: 'auto' // Override global button width
-                        }}
+                        className={`autoplay-button ${isAutoPlayEnabled ? 'enabled' : 'disabled'}`}
                     >
                         {isAutoPlayEnabled ? '🔊 자동' : '🔇 수동'}
                     </button>
-
-
                 </div>
             </div>
 
@@ -463,28 +404,12 @@ const Game = ({ mode, onBack }) => {
                     <img
                         src={imageUrl}
                         alt=""
-                        style={{
-                            position: 'absolute',
-                            top: '-50px', left: '-50px', right: '-50px', bottom: '-50px',
-                            width: 'calc(100% + 100px)', height: 'calc(100% + 100px)',
-                            objectFit: 'cover',
-                            filter: 'blur(30px) brightness(0.6)',
-                            zIndex: 0
-                        }}
+                        className="background-blur"
                     />
                     <img
                         src={imageUrl}
                         alt={subChar}
                         className="animal-display"
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                            zIndex: 1
-                        }}
                         onError={(e) => {
                             e.target.style.display = 'none';
                         }}
@@ -495,11 +420,6 @@ const Game = ({ mode, onBack }) => {
                     className={`character-display ${animate ? 'pop' : ''}`}
                     style={{
                         fontSize: displayChar.length > 8 ? '4rem' : (displayChar.length > 3 ? '8rem' : '15rem'),
-                        fontWeight: 'bold',
-                        color: 'white',
-                        textShadow: '0 10px 20px rgba(0,0,0,0.2)',
-                        transition: 'transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                        marginBottom: subChar ? '0' : '0',
                         textTransform: (mode.subMode?.startsWith('animals-') || mode.subMode?.startsWith('zootopia')) ? 'capitalize' : 'none'
                     }}
                 >
@@ -508,35 +428,9 @@ const Game = ({ mode, onBack }) => {
             )}
 
             {imageUrl ? (
-                <div style={{
-                    position: 'absolute',
-                    bottom: '130px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '90%',
-                    maxWidth: '400px',
-                    padding: '20px',
-                    background: 'rgba(0, 0, 0, 0.4)',
-                    backdropFilter: 'blur(12px)',
-                    borderRadius: '24px',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px',
-                    zIndex: 5,
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-                }}>
+                <div className="animal-info-panel">
                     {subChar && (
-                        <div className={animate ? 'pop' : ''} style={{
-                            fontSize: '2.5rem',
-                            fontWeight: '800',
-                            color: 'white',
-                            textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                            lineHeight: 1.1,
-                            textAlign: 'center',
-                            textTransform: 'capitalize'
-                        }}>
+                        <div className={`animal-name-text ${animate ? 'pop' : ''}`}>
                             {subChar}
                         </div>
                     )}
@@ -554,19 +448,7 @@ const Game = ({ mode, onBack }) => {
                                     }, 200);
                                     playSound(characterName, `${mode.subMode}_char`);
                                 }}
-                                style={{
-                                    fontSize: '1.4rem',
-                                    color: 'rgba(255,255,255,0.9)',
-                                    background: 'rgba(255,255,255,0.15)',
-                                    padding: '8px 20px',
-                                    borderRadius: '50px',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s',
-                                    fontWeight: '600',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '6px'
-                                }}
+                                className="character-badge"
                             >
                                 <span style={{ fontSize: '1rem' }}>🗣️</span> {characterName}
                             </div>
@@ -576,26 +458,11 @@ const Game = ({ mode, onBack }) => {
                                         e.stopPropagation();
                                         setShowInfo(!showInfo);
                                     }}
+                                    className="info-bullet"
                                     style={{
-                                        width: '24px',
-                                        height: '24px',
-                                        borderRadius: '50%',
                                         background: showInfo ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.25)',
                                         color: showInfo ? '#333' : 'rgba(255,255,255,0.9)',
-                                        border: '1px solid rgba(255,255,255,0.1)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        cursor: 'pointer',
-                                        fontSize: '0.9rem',
-                                        fontWeight: 'bold',
-                                        fontFamily: 'serif',
-                                        fontStyle: 'italic',
-                                        boxShadow: showInfo ? '0 2px 5px rgba(255,255,255,0.3)' : 'none',
-                                        transition: 'all 0.2s',
-                                        flexShrink: 0,
-                                        padding: 0,
-                                        margin: 0
+                                        boxShadow: showInfo ? '0 2px 5px rgba(255,255,255,0.3)' : 'none'
                                     }}
                                     title="인물 설명 보기"
                                 >
@@ -605,20 +472,7 @@ const Game = ({ mode, onBack }) => {
                         </div>
                     )}
                     {showInfo && characterDesc && (
-                        <div style={{
-                            marginTop: '5px',
-                            color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '1rem',
-                            lineHeight: '1.4',
-                            textAlign: 'center',
-                            background: 'rgba(0, 0, 0, 0.3)',
-                            padding: '12px 16px',
-                            borderRadius: '16px',
-                            width: '100%',
-                            whiteSpace: 'pre-line',
-                            wordBreak: 'keep-all',
-                            animation: 'popAnimation 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-                        }}>
+                        <div className="character-desc-box">
                             {characterDesc}
                         </div>
                     )}
@@ -627,11 +481,9 @@ const Game = ({ mode, onBack }) => {
                 <>
                     {subChar && (
                         <div
+                            className="sub-char-text"
                             style={{
                                 fontSize: mode.subMode?.startsWith('animals-') ? '2.5rem' : (subChar.length > 3 ? '3rem' : '6rem'),
-                                fontWeight: '500',
-                                color: 'rgba(255,255,255,0.8)',
-                                textShadow: '0 5px 10px rgba(0,0,0,0.1)',
                                 marginTop: mode.subMode?.startsWith('animals-') ? '1.5rem' : '-2rem',
                                 textTransform: mode.subMode?.startsWith('animals-') ? 'capitalize' : 'none'
                             }}
@@ -653,18 +505,7 @@ const Game = ({ mode, onBack }) => {
                                 }, 200);
                                 playSound(characterName, `${mode.subMode}_char`);
                             }}
-                            style={{
-                                fontSize: '1.2rem',
-                                fontWeight: '400',
-                                color: 'rgba(255,255,255,0.6)',
-                                textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                marginTop: '0.5rem',
-                                fontStyle: 'italic',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s ease',
-                                padding: '5px 10px',
-                                borderRadius: '10px'
-                            }}
+                            className="char-name-italic"
                         >
                             {characterName}
                         </div>
@@ -677,44 +518,13 @@ const Game = ({ mode, onBack }) => {
                     e.stopPropagation();
                     generateNextChar(true); // Button generates next char
                 }}
-                style={{
-                    position: 'absolute',
-                    bottom: '40px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: 'auto',
-                    height: 'auto',
-                    borderRadius: '50px',
-                    background: 'rgba(0, 0, 0, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                    border: '2px solid rgba(255, 255, 255, 0.2)',
-                    boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1)',
-                    zIndex: 10,
-                    padding: '1rem 2.5rem'
-                }}
+                className="next-button"
             >
-                <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>다음</span>
+                <span>다음</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             </button>
-
-            <style>{`
-        .pop {
-          animation: popAnimation 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popAnimation {
-          0% { transform: scale(0.5); opacity: 0; }
-          70% { transform: scale(1.1); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
         </div>
     );
 };

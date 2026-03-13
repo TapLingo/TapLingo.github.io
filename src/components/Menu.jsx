@@ -1,4 +1,5 @@
 import React from 'react';
+import './Menu.css';
 
 const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartGame }) => {
     const [selectedCasing, setSelectedCasing] = React.useState('both');
@@ -42,112 +43,74 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
 
     const renderMainMenu = () => (
         <>
-            <h1 style={{ marginBottom: '0.5rem' }}>어린이 공부방</h1>
-            <p style={{
-                fontSize: '1.1rem',
-                color: 'rgba(255, 255, 255, 0.9)',
-                marginBottom: '2.5rem',
-                fontWeight: '400',
-                textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-            }}>
-            </p>
-            <div style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '2rem', padding: '0 20px', paddingBottom: '3rem' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    <h2 style={{ fontSize: '1.2rem', textAlign: 'left', margin: 0, paddingLeft: '0.5rem', color: 'rgba(255,255,255,0.9)', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>✏️ 기초 학습</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <h1 className="menu-title">어린이 공부방</h1>
+            <p className="menu-subtitle"></p>
+            <div className="menu-section">
+                <div className="section-group">
+                    <h2 className="section-title">✏️ 기초 학습</h2>
+                    <div className="grid-2col">
                         <button
                             onClick={() => handleMainModeSelect('english')}
-                            style={{ background: 'var(--gradient-english)', color: 'white', border: 'none', aspectRatio: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '24px' }}
+                            className="menu-card"
+                            style={{ background: 'var(--gradient-english)' }}
                         >
-                            <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800' }}>ABC</span>
+                            <span className="card-icon-text">ABC</span>
                             알파벳
                         </button>
                         <button
                             onClick={() => handleMainModeSelect('hangul')}
-                            style={{ background: 'var(--gradient-hangul)', color: 'white', border: 'none', aspectRatio: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderRadius: '24px' }}
+                            className="menu-card"
+                            style={{ background: 'var(--gradient-hangul)' }}
                         >
-                            <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800' }}>가나다</span>
+                            <span className="card-icon-text">가나다</span>
                             한글
                         </button>
                         <button
                             onClick={() => handleMainModeSelect('number')}
-                            style={{ gridColumn: '1 / -1', background: 'var(--gradient-number)', color: 'white', border: 'none', padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '24px' }}
+                            className="row-card wide-row"
+                            style={{ background: 'var(--gradient-number)' }}
                         >
                             <div style={{ textAlign: 'left' }}>
-                                <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800' }}>123</span>
+                                <span className="card-icon-text">123</span>
                                 숫자
                             </div>
-                            <div style={{ fontSize: '3rem', opacity: 0.8 }}>🔢</div>
+                            <div className="card-emoji-large">🔢</div>
                         </button>
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    <h2 style={{ fontSize: '1.2rem', textAlign: 'left', margin: 0, paddingLeft: '0.5rem', color: 'rgba(255,255,255,0.9)', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>🐾 동물 친구들</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="section-group">
+                    <h2 className="section-title">🐾 동물 친구들</h2>
+                    <div className="grid-2col">
                         <button
                             onClick={() => handleMainModeSelect('animals')}
+                            className="row-card wide-row animal-poster-card"
                             style={{
-                                gridColumn: '1 / -1',
-                                backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 100%), url("/assets/animals-poster.jpg")',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center 40%',
-                                color: 'white',
-                                border: 'none',
-                                padding: '1.5rem 2rem',
-                                minHeight: '130px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'flex-start',
-                                borderRadius: '24px',
-                                boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+                                backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 100%), url("/assets/animals-poster.jpg")'
                             }}
                         >
-                            <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>동물</span>
-                            <span style={{ fontSize: '1.1rem', textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>이름 말하기</span>
+                            <span className="card-icon-text text-shadow-strong">동물</span>
+                            <span className="card-label text-shadow-strong">이름 말하기</span>
                         </button>
                         <button
                             onClick={() => onStartGame({ mode: 'animals', subMode: 'zootopia', order: 'random' })}
+                            className="menu-card animal-sub-card"
                             style={{
-                                backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%), url("/assets/zootopia-poster.jpg")',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center 20%',
-                                color: 'white',
-                                border: 'none',
-                                aspectRatio: '1',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'flex-end',
-                                alignItems: 'flex-start',
-                                padding: '1.2rem',
-                                borderRadius: '24px',
-                                boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+                                backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%), url("/assets/zootopia-poster.jpg")'
                             }}
                         >
-                            <span style={{ fontSize: '1.4rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5)' }}>주토피아</span>
-                            <span style={{ fontSize: '0.9rem', textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>영어로 말하기</span>
+                            <span style={{ fontSize: '1.4rem' }} className="card-icon-text text-shadow-strong">주토피아</span>
+                            <span style={{ fontSize: '0.9rem' }} className="card-label text-shadow-strong">영어로 말하기</span>
                         </button>
                         <button
                             onClick={() => onStartGame({ mode: 'animals', subMode: 'zootopia2', order: 'random' })}
+                            className="menu-card animal-sub-card"
                             style={{
-                                backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%), url("/assets/zootopia2-poster.jpg")',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center 20%',
-                                color: 'white',
-                                border: 'none',
-                                aspectRatio: '1',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'flex-end',
-                                alignItems: 'flex-start',
-                                padding: '1.2rem',
-                                borderRadius: '24px',
-                                boxShadow: '0 8px 16px rgba(0,0,0,0.3)'
+                                backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%), url("/assets/zootopia2-poster.jpg")'
                             }}
                         >
-                            <span style={{ fontSize: '1.4rem', display: 'block', marginBottom: '0.2rem', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5)' }}>주토피아 2</span>
-                            <span style={{ fontSize: '0.9rem', textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>영어로 말하기</span>
+                            <span style={{ fontSize: '1.4rem' }} className="card-icon-text text-shadow-strong">주토피아 2</span>
+                            <span style={{ fontSize: '0.9rem' }} className="card-label text-shadow-strong">영어로 말하기</span>
                         </button>
                     </div>
                 </div>
@@ -375,72 +338,22 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
                 <h2 style={{ fontSize: '1.2rem', fontWeight: '400', opacity: 0.9, marginBottom: '2rem' }}>{subTitle}</h2>
 
                 {selectedMode === 'english' && (selectedSubMode === 'alphabet' || selectedSubMode === 'sounds') && (
-                    <div style={{
-                        display: 'flex',
-                        width: '100%',
-                        maxWidth: '350px',
-                        gap: '8px',
-                        marginBottom: '2rem',
-                        background: 'rgba(0, 0, 0, 0.2)',
-                        padding: '6px',
-                        borderRadius: '18px',
-                        backdropFilter: 'blur(10px)',
-                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
-                    }}>
+                    <div className="casing-selector">
                         <button
                             onClick={() => setSelectedCasing('upper')}
-                            style={{
-                                flex: 1,
-                                padding: '12px 5px',
-                                borderRadius: '14px',
-                                background: selectedCasing === 'upper' ? 'white' : 'transparent',
-                                color: selectedCasing === 'upper' ? '#333' : 'white',
-                                border: 'none',
-                                fontSize: '0.95rem',
-                                fontWeight: '700',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                boxShadow: selectedCasing === 'upper' ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
-                                minWidth: 0,
-                                margin: 0
-                            }}
+                            className={`casing-button ${selectedCasing === 'upper' ? 'active' : 'inactive'}`}
                         >
                             대문자
                         </button>
                         <button
                             onClick={() => setSelectedCasing('lower')}
-                            style={{
-                                flex: 1,
-                                padding: '12px 5px',
-                                borderRadius: '14px',
-                                background: selectedCasing === 'lower' ? 'white' : 'transparent',
-                                color: selectedCasing === 'lower' ? '#333' : 'white',
-                                border: 'none',
-                                fontSize: '0.95rem',
-                                fontWeight: '700',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                boxShadow: selectedCasing === 'lower' ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
-                                minWidth: 0,
-                                margin: 0
-                            }}
+                            className={`casing-button ${selectedCasing === 'lower' ? 'active' : 'inactive'}`}
                         >
                             소문자
                         </button>
                         <button
                             onClick={() => setSelectedCasing('both')}
-                            style={{
-                                flex: 1,
-                                padding: '12px 5px',
-                                borderRadius: '14px',
-                                background: selectedCasing === 'both' ? 'white' : 'transparent',
-                                color: selectedCasing === 'both' ? '#333' : 'white',
-                                border: 'none',
-                                fontSize: '0.95rem',
-                                fontWeight: '700',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                boxShadow: selectedCasing === 'both' ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
-                                minWidth: 0,
-                                margin: 0
-                            }}
+                            className={`casing-button ${selectedCasing === 'both' ? 'active' : 'inactive'}`}
                         >
                             같이
                         </button>
@@ -452,14 +365,14 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
                         onClick={() => handleOrderSelect('random')}
                         style={{ background: bgStyle, color: 'white', border: 'none' }}
                     >
-                        <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '0.5rem' }}>🎲</span>
+                        <span className="order-emoji">🎲</span>
                         무작위
                     </button>
                     <button
                         onClick={() => handleOrderSelect('sequential')}
                         style={{ background: bgStyle, color: 'white', border: 'none' }}
                     >
-                        <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '0.5rem' }}>🔢</span>
+                        <span className="order-emoji">🔢</span>
                         순서대로
                     </button>
                     <button
@@ -474,15 +387,7 @@ const Menu = ({ currentView, selectedMode, selectedSubMode, onNavigate, onStartG
     };
 
     return (
-        <div className="menu-container" style={{
-            width: '100%',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '20px'
-        }}>
+        <div className="menu-container">
             {currentView === 'main' && renderMainMenu()}
             {currentView === 'english' && renderEnglishMenu()}
             {currentView === 'animals' && renderAnimalsMenu()}
